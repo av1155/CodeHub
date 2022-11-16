@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HTML5</title>
+    <style>
+      body {
+        max-width: 650px;
+        margin: auto;
+        background: white;
+        padding: 10px;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      .main1 {
+        text-align: center;
+        color: black;
+      }
+      img {
+        width: 100%;
+        border-radius: 10px;
+        object-fit: cover;
+      }
+      .logo {
+        width: 20%;
+        border-radius: 10px;
+        object-fit: cover;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+      }
+      .spanbold {
+        font-weight: bold;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1 class="main1">This page is to record the HTML5 learning</h1>
+
+    <img
+      src="/HTML/Pictures/Structure of HTML5.png"
+      alt="This picture shows the seven content models of HTML5"
+    />
+
+    <hr />
+
+    <header>
+      <img
+        class="logo"
+        src="/HTML/Pictures/HTML5 Logo.png"
+        alt="Picture of the logo of HTML5"
+      />
+    </header>
+
+    <nav>
+      <h1>Navigation Page</h1>
+      <ul>
+        <li><a href="#part1">Article/Section 1</a></li>
+        <li><a href="#part2">Article/Section 2</a></li>
+        <li><a href="#part3">Article/Section 3</a></li>
+        <li><a href="#aside1">Aside 1</a></li>
+        <li><a href="#footer">Footer</a></li>
+      </ul>
+    </nav>
+
+      <hr>
+
+    <article>
+      <h1>Article</h1>
+
+      <section>
+        <h1 id="part1">Article/Section 1</h1>
+        <p>
+          The first method uses the source "src" attribute; like an img,
+          followed by "controls."
+        </p>
+        <audio src="http://www.sololearn.com/uploads/audio.mp3" controls>
+          Audio element not supported by your browser
+        </audio>
+
+        <br />
+
+        <p>
+          The second method uses the "source" element inside the "audio"
+          element. "Audio" goes with "controls," and then "source" goes below.
+          "Source" basically replaces the "img" attribute. When this method is
+          used, the first recognized format will be used by the browser.
+        </p>
+        <audio controls>
+          <source
+            src="http://www.sololearn.com/uploads/audio.mp3"
+            type="audio/mpeg"
+          />
+          <source
+            src="http://www.sololearn.com/uploads/audio.ogg"
+            type="audio/ogg"
+          />
+          Audio element not supported by your browser
+        </audio>
+      </section>
+      
+      <!-- The text that goes on top of the closing tag of "audio" signifies
+          that when the audio isnot supported, that text will be displayed instead.-->
+
+      <!-- - The tag "control" means that a audio control should be displayed.
+           - The tag "autoplay" means that the audio should play immediately without the 
+             visitor's permission.
+           - The tag "loop" means that the audio should be repeated when finished. -->
+
+      <section>
+        <h1 id="part2">Article/Section 2</h1>
+        <p>
+          The video element is similar to the audio element. The same two
+          methods to apply the audio element work with the video element.
+        </p>
+        <video controls loop>
+          <source
+            src="/HTML/Pictures/rickroll.mp4"
+            type="video/mp4"
+          />
+          <source
+            src="http://www.sololearn.com/uploads/video.ogg"
+            type="video/ogg"
+          />
+          Video is not supported by your browser
+        </video>
+        <!-- http://www.sololearn.com/uploads/video.mp4 -->
+      </section>
+      
+      <!-- The same tags for controls, autplay, and loop apply to the video attribute. -->
+
+      <section>
+        <h1 id="part3">Article/Section 3</h1>
+        Status: <progress min="0" max="100" value="50"></progress>
+      </section>
+
+      <!-- Use in conjunction with JavaScript to dynamically display a task's progress. -->
+      
+      <section>
+        <aside>
+        <h1>Aside within an article</h1>
+          <p>
+            This "aside" should relate to content within the "article" attribute,
+            such as: These "gifts" will be delivered within 24 hours.
+          </p>
+        </aside>
+        <h1>Types of Web Storage Objects</h1>
+          <ul>
+            <li>SessionStorage()</li>
+            <li>LocalStorage()</li>
+          </ul>
+          <p>
+            <span class="spanbold">Local vs. Session</span>
+          <ul>
+            <li>Session Storage is destroyed once the user closes the browser</li>
+            <li>Local Storage stores data with no expiration date</li>
+          </p>
+          </ul>
+        <h1>Working with Values</h1>
+        <p>
+          The syntax for web storage for both local and session storage is very simple and similar.
+          The data is stored as key/value pairs.
+        </p>
+        <p><span class="spanbold"> There are four different attributes for storing data </span></p>
+        <ul>
+          <li><span class="spanbold">Storing a value:</span></li>
+            <ul>
+              <li>.setItem</li>
+              <li>An example would be: </li>
+                <ul>
+                  <li>localStorage.setItem("key1", "value1");</li>
+                </ul>
+            </ul>
+        <br>
+          <li><span class="spanbold">Getting a value:</span></li>
+            <ul>
+              <li>.getItem</li>
+              <li>An example would be: </li>
+                <ul>
+                  <li>alert(localStorage.getItem("key1"));</li>
+                </ul>
+              <!-- This will print the value -->
+            </ul>
+        <br>
+          <li><span class="spanbold">Removing a value:</span></li>
+            <ul>
+              <li>.removeItem</li>
+              <li>An example would be: </li>
+                <ul>
+                  <li>localStorage.removeItem("key1");</li>
+                </ul>
+            </ul>
+        <br>
+          <li><span class="spanbold">Removing all values:</span></li>
+            <ul>
+              <li>.clear</li>
+              <li>An example would be: </li>
+                <ul>
+                  <li>localStorage.clear();</li>
+                </ul>
+            </ul>
+        </ul>
+      </section>
+
+      <section>
+        <h1>HTML Geolocation</h1>
+        <p>The Geolocation API's main method is "getCurrentPosition".</p>
+        <ul>
+          <li>An example would be:</li>
+          <ul>
+            <li>navigator.geolocation.getCurrentPosition();</li>
+            <!-- This is JavaScript -->
+          </ul>
+        </ul>
+        <h1>There are three different parameters:</h1>
+        <img 
+        src="/HTML/Pictures/Geolocation Parameters.png" 
+        alt="This is a picture that shows the three different Geolocation parameters.">
+        <p>The user's location can be shown in two different ways:</p>
+        <ul>
+          <li><span class="spanbold">Geodetic:</span> Latitude and longitude.</li>
+          <li><span class="spanbold">Civic:</span> An address.</li>
+        </ul>
+        <p>Each parameter has both a geodetic and a civic representation.</p>
+      </section>
+
+      <section>
+        <h1>Drag&Drop API</h1>
+        <p>Making elements draggable is possible thanks to the "draggable" attribute.</p>
+        <ul>
+          <li>An example of this would be:</li>
+          <ul>
+            <li> &ltimg draggable="true" /&gt</li>
+          </ul>
+        </ul>
+        <p>The rest of this lesson requires basic JavaScript knowledge.</p>
+      </section>
+
+      <section>
+        <h1>Scalable Vector Graphics</h1>
+        <p>SVG is used to draw shapes with HTML-style markup.</p>
+        <p>An SVG can be inserted to HTML code with a basic img tag and a src attribute pointing to the image. </p>
+        <p>&ltimg src="image.svg" alt="" height="100"&gt</p>
+        <h1>Circle</h1>
+        <p>To create a circle a svg tag should be used.</p>
+        <ul>
+          <li>&ltsvg width="150" height="150"&gt</li>
+          <ul>
+            <li>&ltcircle cx="80" cy="80" r="50" fill="orange"</li>
+          </ul>
+          <li>&lt/svg&gt</li>
+        </ul>
+        <svg width="150" height="150">
+          <circle cx="80" cy="80" r="50" fill="orange"
+        </svg>
+        <p>You can also do other shapes such as rectangles, lines, polylines, ellipses, and polygons with similar code.</p>
+      </section>
+
+      <section>
+        <h1>SVG Animations</h1>
+        <p>SVG animations can be created by using the &ltanimate&gt element.</p>
+
+        <svg width="475" height="150">
+          <rect width="150" height="150" fill="orange">
+            <animate attributeName="x" from="0" to="500"
+              dur="3s" fill="freeze" repeatCount="indefinite"/>
+          </rect>
+        </svg>
+
+        <ul>
+          <li><span class="spanbold">attributeName:</span>Specifies which attribute will be affected by the animation.</li>
+          <li><span class="spanbold">from:</span>Specifies the starting value of the attribute.</li> 
+          <li><span class="spanbold">to:</span>Specifies the ending value of the attribute.</li>
+          <li><span class="spanbold">dur:</span>Specifies how long the animation runs (duration).</li>
+          <li><span class="spanbold">fill:</span>Specifies whether or not the attribute's value should return to its initial 
+            value when the animation is finished (Values: "remove" resets the value; "freeze" keeps the “to value”).</li>
+          <li><span class="spanbold">repeatCount:</span>Specifies the repeat count of the animation.</li>      
+        </ul>
+
+        <p>In the example above, the rectangle changes its x attribute from 0 to 500 in 3 seconds.</p>
+        <p>The &ltpath&gt element is used to define a path.</p>
+        <ul>
+          <li><span class="spanbold">M:</span> moveto</li>
+          <li><span class="spanbold">L:</span> lineto</li>
+          <li><span class="spanbold">H:</span> horizontal lineto</li>
+          <li><span class="spanbold">V:</span> vertical lineto</li>
+          <li><span class="spanbold">C:</span> curveto</li>
+          <li><span class="spanbold">S:</span> smooth curveto</li>
+          <li><span class="spanbold">Q:</span> quadratic Bézier curve</li>
+          <li><span class="spanbold">T:</span> smooth quadratic Bézier curveto</li>
+          <li><span class="spanbold">A:</span> elliptical Arc</li>
+          <li><span class="spanbold">Z:</span> closepath</li>
+        </ul>
+
+        <svg width="200" height="200">
+          <path d="M 0 0 L200 200 L200 0 Z" style="stroke:#000; fill:none;" />
+        </svg>
+
+        <p>M places our "virtual pen" down at the position 0, 0. It then moves 200px down and to the right, then moves up to 
+          the position 200, 0. The Z command closes the shape, which results in a hypotenuse.</p>
+
+      </section>
+    </article>
+
+    <!-- In HTML4 "div" was used; however, "article" is now used imstead.
+        An example of "article" is the comments section in a blog post. -->
+
+    <!-- Sections are used to divide content within an article. For example, 
+        a homepage could have a section for introducing the company, another
+        for news items, and still another for contact information. 
+        Sections should be identified at the beginning, through a heading. -->
+
+    <aside>
+      <h1 id="aside1">Aside 1</h1>
+      <p>This "aside" should relate to the surrounding content instead.</p>
+    </aside>
+
+    <!-- "aside" is secondary or tangential content which could be considered
+        separate from but indirectly related to the main content.
+        This type of content is often represented in sidebars.
+        When an <aside> tag is used within an <article> tag, the content of
+        the <aside> should be specifically related to that article. 
+        If it is used outside of an "article", it should relate to the 
+        surrounding content instead. -->
+
+    <footer>
+      <h1 id="footer">Footer</h1>
+      <p>
+        Copyright Info <br />
+        Privacy policy <br />
+        Social media icons <br />
+        Terms of service <br />
+        Sitemap and related documents
+      </p>
+    </footer>
+
+    <a href="/HTML/index.html">Home Page</a>
+  </body>
+</html>

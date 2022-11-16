@@ -1,0 +1,53 @@
+.content {
+  max-width: 650px;
+  margin: auto;
+  background: white;
+  padding: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.img1 {
+  width: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+}
+.main1 {
+  text-align: center;
+  color: black;
+}
+.main2 {
+  color: cadetblue;
+}
+.indentation {
+  text-indent: 0.5in;
+}
+.city1 {
+  font-size: large;
+  font-weight: bold;
+  font-style: italic;
+}
+.table1 {
+  border: 3px solid;
+  border-color: peru;
+  border-radius: 5px;
+  width: auto;
+  text-align: center;
+  margin: auto;
+}
+.table1 th, .table1 td {
+  padding: 5px;
+  border: 1px solid;
+  border-color: peru;
+}
+.table1 th {
+  background-color: peru;
+}
+.table1 td {
+  background-color: rgb(255, 237, 216);
+}
+.login2 {
+  background-color: peru;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  border-radius: 10px;
+}

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="This webpage is a blog which displays the beaches that I have been to, as well as some helpful information regarding HTML and CSS"
+    />
+
+    <title>Beaches - Blog</title>
+    <link rel="stylesheet" href="/HTML/CSS/style.css">
+  </head>
+
+  <!-- Using CSS is very fun and simple really, it is made up of many declarations which each have a property and a value. -->
+
+  <body>
+
+  <div class="content">
+
+    <h1 class="main1">An HTML and CSS Showcase!</h1>
+
+    <h2 class="main2">Introduction</h2>
+    <p class="indentation">
+      Before I start talking about beaches, I should probably introduce myself.
+      My name is <b>Andrea</b> and I am originally from <u>Spain</u>. In Spain,
+      there are countless beaches, ranging from <i>Las Islas Canarias</i> all
+      the way to <i>Barcelona</i>. My favorite beach is the one in Marbella,
+      because this is where I'm from; I have countless memories there!
+    </p>
+
+    <a href="/HTML Resume/resume.html">Resume</a>
+    <br />
+
+    <a href="https://www.linkedin.com/in/andrea-venti" target="_blank"
+      >LinkedIn</a
+    >
+
+    <br />
+
+    <a href="mailto:andrea.venti12@gmail.com">Email Me</a>
+
+    <hr />
+
+    <h2 class="main2">Shortcuts</h2>
+
+    <a href="#myschedule">My Schedule</a>
+    <br>
+
+    <a href="#login1">Login</a>
+    <br>
+
+    <a href="#marbella">Marbella</a>
+    <br />
+
+    <a href="#punta">Punta del Este</a>
+    <br />
+
+    <a href="#tamarindo">Tamarindo</a>
+
+    <hr />
+
+<h2 class="main2">HTML5 Learning</h2>
+
+<a href="/HTML/html5.html">HTML5</a>
+
+<hr>
+
+    <h2 class="main2">Commands</h2>
+
+    <p>
+      There are many more commands for styling text, these are: <br />
+      <b>Bold "b"</b>
+      <br />
+      <i>Italics "i"</i>
+      <br />
+      <u>Underline "u"</u>
+      <br />
+      <big>Big Text "big"</big>
+      <br />
+      <span style="font-size: larger">
+        Big text "through CSS by writing span, then style, then font-size, then
+        larger."
+      </span>
+      <!-- It is considered wrong to use BIG now. Instead, use CSS like shown above. Big is obsolete. -->
+      <br />
+      <small>Small Text "small" </small>
+      <br />
+      <strong
+        >This is used to bold and make it important for the user
+        "strong"</strong
+      >
+      <br />
+      <em>This is used to italic and make it important for the user "em" </em>
+      <br />
+      <sup> Supscript = Higher baseline for typographical reasons "sup" </sup>
+      <br />
+      <sub> Subscript = Lower baseline for typographical reasons "sub" </sub>
+      <br />
+      <ins>Text that has been inserted (update) to a document "ins" </ins>
+      <br />
+      <del>Text that has been deleted (update) from a document "del"</del>
+    </p>
+    <p>
+      Another command is the use of ordered lists "ol" and unordered lists "ul."
+      <br />
+      The actual list attribute is "li." <br> An example of a numbered list would be: 
+      <br> 
+      <ol>
+        <li>Number 1</li>
+        <li>Number 2</li>
+        <li>Number 3</li>
+        <li>Number 4</li>
+      </ol>
+      An example of an unordered list would be: 
+      <br>
+      <ul>
+        <li>Number 1</li>
+        <li>Number 2</li>
+        <li>Number 3</li>
+        <li>Number 4</li>
+      </ul>
+    </p>
+
+    <hr>
+
+    <h2 id="myschedule" class="main2">My Schedule</h2>
+
+    <p>
+    <table class="table1">
+      <tr>
+        <th>Day</th>
+        <th>Sunday</th>
+        <th>Monday</th>
+        <th>Tuesday</th>
+        <th>Wednesday</th>
+        <th>Thursday</th>
+        <th>Friday</th>
+        <th>Saturday</th>
+      </tr>
+      <tr>
+        <th>9-11</th>
+        <td colspan="6">Workout</td>
+        <td>Free Time</td>
+      </tr>
+      <tr>
+        <th>12:30-3</th>
+        <td colspan="2">Study/Homework</td>
+        <td>Biology</td>
+        <td>Study/Homework</td>
+        <td>Biology</td>
+        <td colspan="2" >Study/Homework</td>
+      </tr>
+      <tr>
+        <th>3-5</th>
+        <td colspan="7">Free Time</td>
+      </tr>
+      <tr>
+        <th>5:30-9</th>
+        <td>Free Time</td>
+        <td>Nutrition</td>
+        <td colspan="2">Free Time</td>
+        <td>Health Informatics</td>
+        <td colspan="2">Free Time</td>
+      </tr>
+    </table>
+    </p>
+    
+    <hr>
+
+    <h2 id="login1" class="main2">Login</h2>
+
+    <div class="login2">
+      <h2><i> Login </i></h2>
+      <form action="/HTML/About/index2.html" method="get">
+        <p>
+          <label for="username">Username</label>
+          <br />
+          <input placeholder="Username" type="username"/>
+          <br />
+          <label for="password">Password</label>
+          <br />
+          <input placeholder="Password" type="password"/>
+        </p>
+        
+        <p>
+          <input type="radio" name="choice" value="Undergraduate"/> Undergraduate
+          <br>
+          <input type="radio" name="choice" value="Graduate"/> Graduate
+        </p>
+  
+      <h2><i>Knowledge</i></h2>
+
+        <p>
+          <input type="checkbox" name="HTML" value="1"/> HTML
+          <input type="checkbox" name="CSS" value="2"/> CSS
+        </p>
+
+        <p>
+          <input type="submit">
+        </p>
+      </form>
+    </div>
+    
+<!-- To start a form, first use attribute "form", then use attribute "label"
+    for setting a description, then use attribute "input" to select what type
+    of form is being used, for example, password value makes it so when you type
+    it looks like a password. There are other types of input, such as "radio" for
+    choices, and "checkbox" for multiple selection. You can also use attribute
+    "submit" to make a button. To make the button redirect you somewhere, the
+    attribute form has to be followed by an action. Inside the action you place a URL,
+    and then select either "get" or "post". Input tag has no end tag, that is why the 
+    text goes at the end. -->
+
+    <hr>
+
+    <h2 class="main2">Other types of elements are as follow:</h2>
+    <img
+    class="img1" 
+    src="/HTML/Pictures/Types of Elements.png" 
+    alt="This is a picture that portrays the different types of elements in HTML">
+
+
+    <!-- The section above is for learning, it contains all the attributes 
+      for styling, ordering text, and setting up tables in HTML-->
+
+    <!-- 
+      To start a table use attribute "table", to start a row use "tr", to
+      write main bold category use "th", to write rest of table use "td". 
+      Colspan is for filling the table with blank horizontally (expanding a cell),
+     and rowspan is for filling the table with blank vertically (expanding a row)
+    -->
+
+    <hr />
+
+    <h2 class="main2">Beaches</h2>
+
+    <p id="marbella" class="city1">
+      Marbella, <br />
+      Spain
+    </p>
+
+    <p class="indentation">
+      I am originally from this beautiful city, and my family used to go to this
+      beach all the time. The mountain that you can see off to the distance is
+      called La Concha, and we also spent lots of hours there, it is a beautiful
+      spot that I recommend to anyone. The port that is in the top right of the
+      picture is called Puerto Bánus, this is a hotspot for activities such as
+      dining or walking.
+    </p>
+    <img
+      class="img1"
+      src="Pictures/Marbella Beach.jpg"
+      alt="This is a picture of a beach in Marbella, Spain"
+    />
+
+    <hr />
+
+    <!-- This is a comment section to help the programmer identify their work. The command above is for a line. This is not visible in the webpage. -->
+
+    <p id="punta" class="city1">
+      Punta del Este, <br />
+      Uruguay
+    </p>
+
+    <p class="indentation">
+      This beach in Punta del Este is a beautiful spot with a cool sculpture of
+      a huge buried hand. I used to live here as well! Uruguay is quite windy so
+      the beaches here are mainly used for surfing.
+    </p>
+    <img
+      class="img1"
+      src="Pictures/Punta del Este Beach.webp"
+      alt="This is a picture of a beach in Punta del Exte, Uruguay"
+    />
+
+    <hr />
+
+    <p id="tamarindo" class="city1">
+      Tamarindo, <br />
+      Costa Rica
+    </p>
+
+    <p class="indentation">
+      This beach is located in the West of Costa Rica and it is one of the best
+      beaches in the country. There are many things to do here; however,
+      exploring the tropical area is the main attraction.
+    </p>
+    <img
+      class="img1"
+      src="Pictures/Tamarindo Beach.jpeg"
+      alt="This is a picture of a beach in Tamarindo, Costa Rica"
+    />
+
+    <hr />
+
+    <a href="#">Jump to Top</a>
+
+  </div>
+
+  </body>
+
+  
+
+  <!-- So far I am having a lot of fun and this is an incredible experience, I cannot wait to fully learn everything that is to come.-->
+</html>
