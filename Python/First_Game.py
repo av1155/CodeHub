@@ -39,4 +39,3 @@ if decision == "y":
         print("You stumble around and fall on a knife and die. Good job!")
 else:
     print("You are a coward. Goodbye!")
-
