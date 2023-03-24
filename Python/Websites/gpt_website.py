@@ -68,60 +68,14 @@ def main():
     if st.sidebar.button("Python Projects"):
         st.write("# Python Projects")
         st.write(
-            "Here are some Python Projects to help you practice your Python skills:")
-        st.header("Web Scraper")
+            'Building hands-on projects will help you gain practical coding skills. One step at a time, you\'ll be putting your theoretical knowledge to use and build an impressive portfolio. If you are an experienced Python Developer, You might have heard as well as searched for this question "What are some python projects for beginners & those at an intermediate skill-level and which projects should I work on to gain real time experience?" (when you\'re a beginner) in different communities like GitHub, Reddit or Quora.')
+        st.write('So, to help you with that, here is a list of 70+ simple python projects for beginners, Intermediate and advanced python programmers with source code. This projects will be suitable for python programmers, machine learning with python practitioners, data science with python enthusiasts, etc.')
+        st.write('These python projects are a great way to learn python and build your portfolio. You can use these python projects as a reference to build your own projects.')
+        st.header("Website")
         st.write(
-            "Build a Python program that can scrape data from the web and store it in a file or database.")
-        st.write("[Real Python: Building a Web Scraper with Beautiful Soup](https://realpython.com/beautiful-soup-web-scraper-python/)")
+            "[70+ Simple And Advanced Python Porjects With Source Code](https://www.theinsaneapp.com/2021/06/list-of-python-projects-with-source-code-and-tutorials.html)")
 
-        st.header("Chatbot")
-        st.write("Create a chatbot using Python and machine learning algorithms that can chat with users and respond to their queries.")
-        st.write(
-            "[Real Python: How to Make a Discord Bot in Python](https://realpython.com/how-to-make-a-discord-bot-python/)")
-
-        st.header("Desktop Application")
-        st.write(
-            "Build a desktop application using Python and GUI frameworks like Tkinter, PyQT, or WxPython.")
-        st.write(
-            "[Real Python: Building a GUI Application with Tkinter](https://realpython.com/python-gui-tkinter/)")
-
-        st.header("Image Processing")
-        st.write("Develop a Python program that can manipulate images by applying filters, cropping, resizing, and other operations.")
-        st.write(
-            "[Real Python: Image Processing in Python with Pillow](https://realpython.com/pillow-python-image-processing/)")
-
-        st.header("Data Analysis")
-        st.write(
-            "Use Python libraries like Pandas and Numpy to analyze and visualize data sets.")
-        st.write(
-            "[Real Python: Pandas DataFrame: The Ultimate Guide](https://realpython.com/pandas-dataframe/)")
-
-        st.header("IoT Projects")
-        st.write(
-            "Build IoT projects using Raspberry Pi or Arduino boards and Python programming.")
-        st.write("[Real Python: Getting Started with Raspberry Pi GPIO Pins](https://realpython.com/getting-started-with-raspberry-pi-gpio/)")
-
-        st.header("Game Development")
-        st.write(
-            "Create simple games like tic-tac-toe, hangman, or snake using Python and Pygame.")
-        st.write(
-            "[Real Python: Introduction to Pygame: Build a Space Invaders Clone](https://realpython.com/pygame-a-primer/)")
-
-        st.header("Automation")
-        st.write("Develop automation scripts using Python to automate repetitive tasks like data entry, file manipulation, and more.")
-        st.write("[Real Python: Python Automation: Robust, Repeatable, and Readable](https://realpython.com/python-automation-robust-repeatable-readable/)")
-
-        st.header("Machine Learning")
-        st.write(
-            "Build a machine learning model using Python and popular libraries like Scikit-learn or TensorFlow.")
-        st.write("[Real Python: Introduction to Machine Learning with Python and Scikit-Learn](https://realpython.com/learning-paths/machine-learning-python-scikit-learn/)")
-
-        st.header("Web Development")
-        st.write(
-            "Create web applications using Python web frameworks like Flask, Django, or Pyramid.")
-        st.write("[Real Python: Flask by Example – Setting Up a Python Project](https://realpython.com/flask-by-example-series-setting-up-a-production-ready-web-app/)")
-
-        # add a button to the sidebar to return to the homepage
+    # add a button to the sidebar to return to the homepage
     if st.sidebar.button("Homepage", key='home_button'):
         st.experimental_rerun()
 
