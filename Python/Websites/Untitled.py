@@ -1,26 +1,38 @@
 # Import the required libraries
 import streamlit as st
+from streamlit import caching
 
 # Define the main function that runs the website
 
 
 def main():
-    # Set the title of the website
-    st.set_page_config(
-        page_title="Python Learning Resources",
-        page_icon=":snake:"
-    )
+    # Use SessionState to keep track of whether the user has already visited the homepage
+    session_state = st.session_state.get(
+        "visited_homepage", {"visited": False})
+    if not session_state["visited"]:
+        # Set the title of the website
+        st.set_page_config(
+            page_title="Python Learning Resources",
+            page_icon=":snake:"
+        )
 
-    # Define the logo
-    logo = "https://logodownload.org/wp-content/uploads/2019/10/python-logo-3.png"
+        # Define the logo
+        logo = "https://logodownload.org/wp-content/uploads/2019/10/python-logo-3.png"
 
-    # Add the logo and title to the website
-    st.image(logo, width=400)
-    st.title("Python Learning Resources")
+        # Add the logo and title to the website
+        st.image(logo, width=400)
+        st.title("Python Learning Resources")
 
-    # Define the description section
-    st.write("Welcome to the Python Learning Resources website! Here you will find a curated list of resources to help you learn Python. Use the navigation bar on the left to explore the different sections of the website.")
-    st.write("To get started, we recommend checking out the SoloLearn section for free coding courses or the Python Resources section for tutorials and articles on Python programming.")
+        # Define the description section
+        st.write("Welcome to the Python Learning Resources website! Here you will find a curated list of resources to help you learn Python. Use the navigation bar on the left to explore the different sections of the website.")
+        st.write("To get started, we recommend checking out the SoloLearn section for free coding courses or the Python Resources section for tutorials and articles on Python programming.")
+
+        # Set the session state to mark the homepage as visited
+        session_state["visited"] = True
+    else:
+        # Add a button to allow the user to return to the homepage
+        if st.button("Return to Homepage"):
+            caching.clear_cache()
 
     # Define the Navigation section
     st.sidebar.title("Navigation")
