@@ -25,6 +25,10 @@ def main():
     # Define the Navigation section
     st.sidebar.title("Navigation")
 
+    # add a button to the sidebar to return to the homepage
+    if st.sidebar.button("Home", key='home_button'):
+        st.experimental_rerun()
+
     # Define the SoloLearn sub-page
     if st.sidebar.button("SoloLearn"):
         st.write("# SoloLearn")
@@ -74,10 +78,6 @@ def main():
         st.header("Website")
         st.write(
             "[70+ Simple And Advanced Python Porjects With Source Code](https://www.theinsaneapp.com/2021/06/list-of-python-projects-with-source-code-and-tutorials.html)")
-
-    # add a button to the sidebar to return to the homepage
-    if st.sidebar.button("Homepage", key='home_button'):
-        st.experimental_rerun()
 
 
 # Call the main function to run the website
