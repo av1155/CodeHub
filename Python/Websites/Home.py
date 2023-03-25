@@ -8,7 +8,8 @@ def main():
     # Set the title of the website
     st.set_page_config(
         page_title="Python Learning Resources",
-        page_icon=":snake:"
+        page_icon=":snake:",
+        layout="wide",
     )
 
     # Define the logo
