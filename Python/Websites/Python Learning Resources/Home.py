@@ -12,7 +12,7 @@ st.set_page_config(
 logo = "https://logodownload.org/wp-content/uploads/2019/10/python-logo-3.png"
 
 # Add the logo and title to the website
-st.image(logo, width=400)
+st.image(logo, width=365)
 st.title("Python Learning Resources")
 
 # Define the description section
