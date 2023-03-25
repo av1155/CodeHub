@@ -17,4 +17,5 @@ st.title("Python Learning Resources")
 
 # Define the description section
 st.write("Welcome to the Python Learning Resources website! Here you will find a curated list of resources to help you learn Python. Use the navigation bar on the left to explore the different sections of the website.")
-st.write("To get started, we recommend checking out the SoloLearn section for free coding courses or the Python Resources section for tutorials and articles on Python programming.")
+
+st.write("This is your go-to website for learning and developing your Python programming skills. The SoloLearn page provides a website that offers an interactive learning platform, our Python Resources page includes curated resources to help you understand, our Python Video Tutorials page offers a structured learning experience with helpful videos from significant creators, and our Python Projects page offers you project ideas to challenge, engage, and assist you in expanding your portfolio. Explore our resources and tools to improve your proficiency in Python.")
