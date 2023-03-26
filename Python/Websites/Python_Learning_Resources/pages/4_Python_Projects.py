@@ -16,9 +16,9 @@ st.image(logo, width=180)
 st.title("Python Projects")
 
 st.write(
-    'Building hands-on projects will help you gain practical coding skills. One step at a time, you\'ll be putting your theoretical knowledge to use and build an impressive portfolio. If you are an experienced Python Developer, You might have heard as well as searched for this question "What are some python projects for beginners & those at an intermediate skill-level and which projects should I work on to gain real time experience?" (when you\'re a beginner) in different communities like GitHub, Reddit or Quora.')
-st.write('So, to help you with that, here is a list of 70+ simple python projects for beginners, Intermediate and advanced python programmers with source code. This projects will be suitable for python programmers, machine learning with python practitioners, data science with python enthusiasts, etc.')
-st.write('These python projects are a great way to learn python and build your portfolio. You can use these python projects as a reference to build your own projects.')
+    'Engaging in practical coding projects can significantly enhance your programming skills. Step by step, you\'ll have the opportunity to apply your theoretical knowledge and curate a stunning portfolio. For proficient Python Developers, it\'s possible that you\'ve sought out the answer to the question, "Which projects should I pursue for real-time experience, especially if I\'m new to coding?" on online communities like GitHub, Reddit, or Quora.')
+st.write('To assist in your quest, below is a comprehensive list of 70+ uncomplicated Python projects, complete with source code, suitable for beginners, intermediates, and advanced programmers alike. These projects are appropriate for those interested in machine learning with Python, data science with Python, and similar fields.')
+st.write('Undertaking these Python projects offers an excellent opportunity to grasp the intricacies of Python and craft a portfolio that sets you apart. Furthermore, you may utilize these Python projects as a point of reference to develop your unique projects.')
 
 st.header("Website")
 st.write(
