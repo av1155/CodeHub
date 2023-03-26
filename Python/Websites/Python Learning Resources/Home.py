@@ -26,6 +26,8 @@ st.write(" ")
 st.write(" ")
 st.write(" ")
 
+st.write("Created by Andrea Venti Fuentes")
+
 st.write("Connect with me:")
 st.write(
     "[LinkedIn](https://www.linkedin.com/in/andrea-venti/)", " - ", "[GitHub](https://github.com/av1155)")
