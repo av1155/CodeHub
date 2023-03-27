@@ -1,8 +1,3 @@
-print("\nAndrea A. Venti Fuentes")  # Student's Full Name
-print("aav66@miami.edu")  # Student's Email
-print("CSC 115: Python Programming for Everyone")  # Course
-print("B.S. in Computer Science\n")  # Student's Major
-
 # The input below records the starting number of organisms.
 starting_num_organisms = int(input("Enter the starting number of organisms: "))
 # The while loop below validates the input and requests the user to input a new value if the number is negative or zero.
