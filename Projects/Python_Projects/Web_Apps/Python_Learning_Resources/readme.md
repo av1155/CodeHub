@@ -6,7 +6,7 @@ This is a simple web application that offers a curated list of resources to lear
 
 The web app consists of one main file named Home.py, and four sub-pages stored in the pages folder:
 
-## Python_Learning_Resources
+### Python_Learning_Resources
 
 - Home.py
 - pages/
