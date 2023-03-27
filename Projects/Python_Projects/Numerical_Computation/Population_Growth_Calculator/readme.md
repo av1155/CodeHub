@@ -4,12 +4,12 @@ This is a Python program that calculates the approximate population growth of or
 
 ## Installation
 
-Clone the repository to your local machine.
-Ensure that Python is installed on your machine.
-Open the command prompt or terminal and navigate to the cloned directory.
-Run the program using the command python population_growth_calculator.py.
+- Clone the repository to your local machine.
+- Ensure that Python is installed on your machine.
+- Open the command prompt or terminal and navigate to the cloned directory.
+- Run the program using the command python population_growth_calculator.py.
 
-# Usage
+## Usage
 
 To use the population growth calculator, follow these steps:
 
