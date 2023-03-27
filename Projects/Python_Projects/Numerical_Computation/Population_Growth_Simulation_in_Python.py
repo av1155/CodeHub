@@ -29,24 +29,17 @@ print()
 # The input below records the number of days that the organisms will be left to multiply for.
 days_to_multiply = int(
     input("Enter the number of days the organism will multiply for: "))
-# The while loop below validates the input and requests the user to input a new value if the numbers are either negative or larger than 30.
-while (days_to_multiply < 0) or (days_to_multiply > 30):
+# The while loop below validates the input and requests the user to input a new value if the numbers are either negative, zero, or larger than 30.
+while (days_to_multiply <= 0) or (days_to_multiply > 30):
     days_to_multiply = int(input(
-        "Negative values or values larger than 30 are not allowed. Please re-enter the number of days the organism will be left to multiply for: "))
+        "Negative values, zero, or values larger than 30 are not allowed. Please re-enter the number of days the organism will be left to multiply for: "))
 print()
 
 # The print statement below prints the table header where the days and the approximate population will be displayed.
-print("Day\t Approximate Population")
+print("Day\t\t Approximate Population")
 
-# The for loop below creates a range from 1 to the number of days that the organism will be left to multiply for.
-# A +1 is added so that the range goes from 1 to the exact number, and not one less.
-# For example, if the user inputs 3, the range will go from 1 to 3, not 1 to 2.
-# The loop will run as many times as the number of days the organism will be left to multiply for.
-# The loop will also print the day and the approximate population for each day.
-# The population is calculated by multiplying the starting number of organisms by the daily population increase and continuously updating the value of the starting number of organisms.
-# The population will be displayed with 5 decimal places for ease of reading and uniformity.
+# The for loop below creates a range from 1 to the number of days that the organism will be left to multiply for. A +1 is added so that the range goes from 1 to the exact number, and not one less. For example, if the user inputs 3, the range will go from 1 to 3, not 1 to 2. The loop will run as many times as the number of days the organism will be left to multiply for. The loop will also print the day and the approximate population for each day. The population is calculated by multiplying the starting number of organisms by the daily population increase and continuously updating the value of the starting number of organisms. The population will be displayed with 5 decimal places for ease of reading and uniformity.
 
 for days in range(1, (days_to_multiply + 1)):
-    print(f"{days} \t {starting_num_organisms:.5f}")
+    print(f"{days} \t\t {round(starting_num_organisms, 5)}")
     starting_num_organisms *= daily_population_increase
-
