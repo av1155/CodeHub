@@ -16,9 +16,9 @@ To play the game, run the `choice_game.py` file in your Python environment.
 
 ## Installation
 
-Clone the repository: `git clone https://github.com/your-username/simple-python-games.git`
-Navigate to the cloned repository: `cd simple-python-games`
-Install the required dependencies: `pip install -r requirements.txt`
+- Clone the repository: `git clone https://github.com/your-username/simple-python-games.git`
+- Navigate to the cloned repository: `cd simple-python-games`
+- Install the required dependencies: `pip install -r requirements.txt`
 
 ## Usage
 
