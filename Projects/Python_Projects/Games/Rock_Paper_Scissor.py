@@ -54,11 +54,7 @@ while True:
         computer_wins += 1
 
     # Ties reduce input_count
-    if computer_guess == "scissors" and user_input == "scissors":
-        input_count -= 1
-    if computer_guess == "rock" and user_input == "rock":
-        input_count -= 1
-    if computer_guess == "paper" and user_input == "paper":
+    if computer_guess == user_input:
         input_count -= 1
 
     # End the game when 3 turns are played!
@@ -77,4 +73,4 @@ else:
         print(
             f"You lost! The computer got {computer_wins} points! You got {user_wins} points :(")
 
-print("Goodbye!")
+print("\nGoodbye!")
