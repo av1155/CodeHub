@@ -75,7 +75,7 @@ while True:
         if input_count == number_of_turns:
             break
 
-    # Winner calculation and decision
+    # Calculate the winner based on the number of points earned by the user and the computer. If both have the same number of points, the game is a tie. Otherwise, the player with the higher number of points wins. The results are printed out at the end of the game.
     if user_wins == computer_wins:
         print(
             f"Tie! You got {user_wins} point/s, and the computer got {computer_wins} point/s.")
