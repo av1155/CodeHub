@@ -3,7 +3,7 @@ import streamlit as st
 
 # Set the title of the website
 st.set_page_config(
-    page_title="SoloLearn",
+    page_title="Python Resources",
     page_icon=":snake:",
     layout="wide",
 )
