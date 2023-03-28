@@ -1,11 +1,14 @@
 import random
 
+# Variables to count for the number of user and computer wins, and another variable to count the number of turns played.
 user_wins = 0
 computer_wins = 0
 input_count = 0
 
+# Rock, paper, scissors is placed inside a list for later use.
 options = ["rock", "paper", "scissors"]
 
+# while True loop for the main section of the game.
 while True:
     # .lower() serves so that if the user inputs q or Q it will be the same thing. All inputs will be the same in lower or upper case under the .lower() method.
     user_input = input("Type Rock/Paper/Scissors or Q to quit: ").lower()
@@ -13,14 +16,18 @@ while True:
         print("Goodbye!")
         quit()
 
+    # Input validation: Checks to see if what the user wrote is an option, if not, it will re-run the first prompt asking the user to quit or pick an option.
     if user_input not in options:
         continue
 
+    # Adds one turn to the counter every time the user plays. Because it is placed after "continue" it will not count errors in the input.
     input_count += 1
 
+    # Random function is imported here as a randint list from 0 to 2, and assigned to a variable called random_number. randint counts from 0, to 2, unline range would.
     random_number = random.randint(0, 2)
     # rock: 0, paper: 1, scissors: 2
 
+    # The computer guess is assigned to the random_number variable.
     computer_guess = options[random_number]
     print(f"\nComputer picked {computer_guess}! You picked {user_input}!")
 
