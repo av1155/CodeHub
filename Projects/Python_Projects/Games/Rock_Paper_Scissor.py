@@ -8,13 +8,23 @@ input_count = 0
 # Rock, paper, scissors is placed inside a list for later use.
 options = ["rock", "paper", "scissors"]
 
+user_decision = input(
+    "Do you want to play rock, paper, scissors? (y/n): ").lower()
+if user_decision != "y" and user_decision != "yes":
+    print("\nGoodbye!")
+    quit()
+
+while True:
+    try:
+        number_of_turns = int(input("How many turns do you want to play? "))
+        break
+    except ValueError:
+        print("\nPlease enter a valid number.")
+
 # while True loop for the main section of the game.
 while True:
     # .lower() serves so that if the user inputs q or Q it will be the same thing. All inputs will be the same in lower or upper case under the .lower() method.
-    user_input = input("Type Rock/Paper/Scissors or Q to quit: ").lower()
-    if user_input == "q":
-        print("Goodbye!")
-        quit()
+    user_input = input("Type Rock/Paper/Scissors: ").lower()
 
     # Input validation: Checks to see if what the user wrote is an option, if not, it will re-run the first prompt asking the user to quit or pick an option.
     if user_input not in options:
@@ -55,10 +65,11 @@ while True:
 
     # Ties reduce input_count
     if computer_guess == user_input:
+        print("Tie!\n")
         input_count -= 1
 
     # End the game when 3 turns are played!
-    if input_count == 3:
+    if input_count == number_of_turns:
         break
 
 # Winner calculation and decision
