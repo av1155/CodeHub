@@ -10,6 +10,7 @@ while True:
     # .lower() serves so that if the user inputs q or Q it will be the same thing. All inputs will be the same in lower or upper case under the .lower() method.
     user_input = input("Type Rock/Paper/Scissors or Q to quit: ").lower()
     if user_input == "q":
+        print("Goodbye!")
         quit()
 
     if user_input not in options:
