@@ -28,7 +28,3 @@ After completing these steps, the program will output the approximate population
 | 5   | 2856100.0              |
 | 6   | 37129300.0             |
 | 7   | 482970100.0            |
-
-### License
-
-This project is licensed under the MIT License. See the LICENSE file for more information.
