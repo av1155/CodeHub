@@ -15,7 +15,9 @@ if user_decision != "y" and user_decision != "yes":
     print("\nGoodbye!")
     quit()
 
+# While True loop to restart the game if the person wants to replay at the end of the game.
 while True:
+    # While True loop that checks if the user inputs anything else but a number, which would return an error, if there is an error, the program will ask again the user to input a valid number.
     while True:
         try:
             number_of_turns = int(
@@ -24,7 +26,7 @@ while True:
         except ValueError:
             print("\nPlease enter a valid number.")
 
-    # while True loop for the main section of the game.
+    # while loop for the main section of the game.
     while input_count < number_of_turns:
         # .lower() serves so that if the user inputs q or Q it will be the same thing. All inputs will be the same in lower or upper case under the .lower() method.
         user_input = input("Type Rock/Paper/Scissors: ").lower()
