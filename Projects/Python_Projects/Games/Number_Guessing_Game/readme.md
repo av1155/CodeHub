@@ -6,7 +6,7 @@ Welcome to the Number Guessing Game! This is a simple game where you have to gue
 
 - Run the program
 - The computer will generate a random number between 1 and 30.
-- - You will be prompted to guess a number between 1 and 30.
+- You will be prompted to guess a number between 1 and 30.
 - If you guess correctly, you win the game! If not, you will have 4 more attempts to guess the number.
 - The computer will give you hints along the way to help you guess the number.
 - If you don't guess the number after 5 attempts, you lose the game.
