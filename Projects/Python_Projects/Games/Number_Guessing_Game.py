@@ -26,7 +26,7 @@ while True:
                     print(
                         f"\nCongratulations! You guessed the number in {counter} attempts!\n")
                     return True
-                elif (random_number - 5 <= number <= random_number + 5):
+                elif (random_number - 3 <= number <= random_number + 3):
                     print("\nYou are so close! Try again.")
                 elif number > random_number:
                     print(f"\nThe number is lower than {number}. Try again.")
