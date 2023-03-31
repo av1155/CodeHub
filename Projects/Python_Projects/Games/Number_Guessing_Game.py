@@ -29,15 +29,15 @@ while True:
                 elif (random_number - 5 <= number <= random_number + 5):
                     print("\nYou are so close! Try again.")
                 elif number > random_number:
-                    print("\nThe number is lower than that. Try again.")
+                    print(f"\nThe number is lower than {number}. Try again.")
                 elif number < random_number:
-                    print("\nThe number is higher than that. Try again.")
+                    print(f"\nThe number is higher than {number}. Try again.")
 
             except ValueError:
                 print("\nPlease enter a valid number.")
 
         print(
-            f"\nSorry, you ran out of attempts. The number was {random_number}\n")
+            f"\nSorry, you ran out of attempts. The number was {random_number} :(\n")
         return False
 
     random_number = random.randint(1, 30)
