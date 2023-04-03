@@ -16,6 +16,28 @@ def load_key():
     return open("key.key", "rb").read()
 
 
+def set_master_password(fernet):
+    password = input("Set the master password: ")
+    encrypted_password = fernet.encrypt(password.encode()).decode()
+
+    with open('master_password.txt', 'w') as f:
+        f.write(encrypted_password)
+
+
+def check_master_password(fernet):
+    with open('master_password.txt', 'r') as f:
+        encrypted_password = f.read()
+
+    decrypted_password = fernet.decrypt(encrypted_password.encode()).decode()
+    input_password = input(
+        "\nEnter the master password to view passwords (type 'exit' to quit):\n> ")
+
+    if input_password == "exit":
+        exit_program()
+
+    return input_password == decrypted_password
+
+
 def main():
     # Generate the encryption key if it doesn't already exist
     write_key()
@@ -26,27 +48,33 @@ def main():
     # Create the Fernet object using the key
     fernet = Fernet(key)
 
+    if not os.path.exists('master_password.txt'):
+        set_master_password(fernet)
+
     while True:
-        program_mode = input(
-            "\nEnter 'view' to view passwords, 'add' to add a password, or 'exit' to quit:\n> ").lower()
+        if check_master_password(fernet):
+            program_mode = input(
+                "\nEnter 'view' to view passwords, 'add' to add a password, or 'exit' to quit:\n> ").lower()
 
-        if program_mode == "view":
-            view_passwords(fernet)
+            if program_mode == "view":
+                view_passwords(fernet)
 
-        elif program_mode == "add":
-            add_password(fernet)
+            elif program_mode == "add":
+                add_password(fernet)
 
-        elif program_mode == "exit":
-            exit_program()
+            elif program_mode == "exit":
+                exit_program()
 
+            else:
+                print("Invalid input. Please try again.")
         else:
-            print("Invalid input. Please try again.")
+            print("Incorrect master password. Please try again.")
 
 
 def view_passwords(fernet):
     print("Viewing passwords...\n")
     # Code to view passwords goes here
-    with open('passwords.txt', 'r') as f:
+    with open('passwords.encrypted', 'r') as f:
         for line in f.readlines():
             data = (line.rstrip())
             user, password = data.split('|')
@@ -61,7 +89,7 @@ def add_password(fernet):
 
     encrypted_password = fernet.encrypt(password.encode()).decode()
 
-    with open('passwords.txt', 'a') as f:
+    with open('passwords.encrypted', 'a') as f:
         f.write(f"{username} | {encrypted_password}\n")
 
     print("Adding a password...")
