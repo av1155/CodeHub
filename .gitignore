@@ -1,2 +1,5 @@
 .DS_Store
 .vscode
+key.key
+master_password.txt
+passwords.encrypted
