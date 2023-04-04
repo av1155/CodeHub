@@ -1,23 +1,47 @@
-# Password Manager
+# PyPassManager
 
-This is a Python script for a basic password manager that encrypts passwords using the Fernet module from the Cryptography package. The script generates a key file and a master password file that are used to encrypt and decrypt passwords. The key file is stored locally in the directory with the script, while the master password file is used to authenticate access to the passwords.
+PyPassManager is a command-line program that allows you to securely store and manage your passwords. It uses the Fernet encryption module from the Cryptography library to encrypt and decrypt passwords.
 
 ## Requirements
 
-Python 3.6 or higher
-Cryptography package (pip install cryptography)
+To use PyPassManager, you must have Python 3.x and the Cryptography library installed on your computer. You can install the library via pip:
 
-## How to Use
+`pip install cryptography`
 
-1. Run the script in a Python environment.
-2. When prompted, set a master password to access the password manager.
-3. Choose between viewing passwords, adding a new password, or exiting the program.
-   - To view passwords, enter 'view' and the stored usernames and passwords will be decrypted and printed to the console.
-   - To add a new password, enter 'add' and input the username and password when prompted. The password will be encrypted and stored in a file.
-   - To exit the program, enter 'exit' at any time.
+## Usage
 
-Note: The script will generate a key file called "key.key" and a master password file called "master_password.txt" in the same directory as the script. Do not delete or modify these files or else the stored passwords will not be accessible.
+To use PyPassManager, run the program with the following command:
 
-# Disclaimer
+`python pypassmanager.py`
 
-This is a basic script for educational purposes only. It is not recommended for storing sensitive passwords and should not be used for real-world password management.
+The program will first check if a master password has been set. If not, you will be prompted to set one. The master password must be at least 8 characters long, and must contain at least one uppercase letter, one lowercase letter, one number, and one special character.
+
+After setting the master password, you will be prompted to enter it to access the program. Once you are logged in, you can use the following commands:
+
+- view: view all stored passwords
+- add: add a new password
+- edit: edit an existing password
+- delete: delete an existing password
+- exit: exit the program
+
+## Adding a Password
+
+To add a new password, use the add command. You will be prompted to enter a username and a password. The password must be at least 8 characters long, and must contain at least one uppercase letter, one lowercase letter, one number, and one special character.
+
+## Viewing Passwords
+
+To view all stored passwords, use the view command. The program will display the username and password for each stored password.
+
+## Editing a Password
+
+To edit an existing password, use the edit command. You will be prompted to enter the username for the password you want to edit, and then to enter the new password. The new password must meet the same requirements as when adding a password.
+
+## Deleting a Password
+
+To delete an existing password, use the delete command. You will be prompted to enter the username for the password you want to delete.
+
+## Security
+
+PyPassManager uses the Fernet encryption module from the Cryptography library to encrypt and decrypt passwords. The encryption key is stored in a file named key.key, which is generated automatically if it doesn't already exist. The key is used to create a Fernet object, which is then used to encrypt and decrypt passwords.
+
+The encrypted passwords are stored in a file named passwords.encrypted. This file is also created automatically if it doesn't already exist. The file is in plain text format, with each line containing the username and encrypted password for a single password, separated by a vertical bar (|).
