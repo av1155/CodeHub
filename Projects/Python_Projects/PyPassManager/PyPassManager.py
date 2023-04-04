@@ -101,13 +101,15 @@ def main():
 
 def view_passwords(fernet):
     print("\nViewing passwords...")
-    # Code to view passwords goes here
-    with open('passwords.encrypted', 'r') as f:
-        for line in f.readlines():
-            data = (line.rstrip())
-            user, password = data.split('|')
-            decrypted_password = fernet.decrypt(password.encode()).decode()
-            print(f"User: {user}| Password: {decrypted_password}")
+    try:
+        with open('passwords.encrypted', 'r') as f:
+            for line in f.readlines():
+                data = (line.rstrip())
+                user, password = data.split('|')
+                decrypted_password = fernet.decrypt(password.encode()).decode()
+                print(f"User: {user}| Password: {decrypted_password}")
+    except FileNotFoundError:
+        print("No passwords found. Please create a password using the 'add' command.")
 
 
 def add_password(fernet):
