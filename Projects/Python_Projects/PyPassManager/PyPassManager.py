@@ -7,11 +7,13 @@ import re
 
 def write_key():
     # check if key file exists
-    if not os.path.exists("key.key"):
+    key_file_path = os.path.join(os.path.dirname(
+        os.path.abspath(__file__)), "key.key")
+    if not os.path.exists(key_file_path):
         # generate key
         key = Fernet.generate_key()
         # write key to file
-        with open("key.key", "wb") as key_file:
+        with open(key_file_path, "wb") as key_file:
             key_file.write(key)
             print("Key generated.")
     else:
@@ -21,7 +23,9 @@ def write_key():
 
 
 def load_key():
-    return open("key.key", "rb").read()
+    key_file_path = os.path.join(os.path.dirname(
+        os.path.abspath(__file__)), "key.key")
+    return open(key_file_path, "rb").read()
 
 # function to set the master password
 
@@ -45,7 +49,9 @@ def set_master_password(fernet):
         else:
             # encrypt password using Fernet object and write to file
             encrypted_password = fernet.encrypt(password.encode()).decode()
-            with open('master_password.txt', 'w') as f:
+            password_file_path = os.path.join(os.path.dirname(
+                os.path.abspath(__file__)), "master_password.txt")
+            with open(password_file_path, 'w') as f:
                 f.write(encrypted_password)
             break
 
@@ -53,7 +59,7 @@ def set_master_password(fernet):
 
 
 def check_master_password(fernet, max_tries=3):
-    with open('master_password.txt', 'r') as f:
+    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "master_password.txt"), "r") as f:
         encrypted_password = f.read()
 
     for i in range(max_tries):
@@ -90,7 +96,7 @@ def main():
     # Create the Fernet object using the key
     fernet = Fernet(key)
 
-    if not os.path.exists('master_password.txt'):
+    if not os.path.exists(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'master_password.txt')):
         # if master password file doesn't exist, prompt user to set one
         set_master_password(fernet)
 
@@ -130,7 +136,7 @@ def view_passwords(fernet):
     print("\nViewing passwords...")
     try:
         # Open the encrypted passwords file and read each line
-        with open('passwords.encrypted', 'r') as f:
+        with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'passwords.encrypted'), 'r') as f:
             for line in f.readlines():
                 # Split the line into the username and password
                 data = (line.rstrip())
@@ -158,7 +164,7 @@ def add_password(fernet):
     # Encrypt the password and append the new username and encrypted password to the passwords file
     encrypted_password = fernet.encrypt(password.encode()).decode()
 
-    with open('passwords.encrypted', 'a') as f:
+    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'passwords.encrypted'), 'a') as f:
         f.write(f"{username} | {encrypted_password}\n")
 
     print("Password added.")
@@ -173,7 +179,7 @@ def edit_password(fernet):
             "\nEnter the username for the password you want to edit:\n> ").strip()
 
         # Open the encrypted password file for reading
-        with open('passwords.encrypted', 'r') as f:
+        with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'passwords.encrypted'), 'r') as f:
             lines = f.readlines()
 
         found = False
@@ -188,7 +194,7 @@ def edit_password(fernet):
                     new_password.encode()).decode()
                 # Replace the old password with the new encrypted password in the file
                 lines[i] = f"{data[0]} | {encrypted_password}\n"
-                with open('passwords.encrypted', 'w') as f:
+                with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'passwords.encrypted'), 'w') as f:
                     f.write(''.join(lines))
                 print("Password edited successfully.")
                 break
@@ -208,8 +214,12 @@ def delete_password(fernet):
         username = input(
             "\nEnter the username for the password you want to delete:\n> ").strip()
 
+        # Get the full path to the passwords file
+        passwords_file = os.path.join(os.path.dirname(
+            os.path.abspath(__file__)), 'passwords.encrypted')
+
         # Open the encrypted password file for reading
-        with open('passwords.encrypted', 'r') as f:
+        with open(passwords_file, 'r') as f:
             lines = f.readlines()
 
         found = False
@@ -220,7 +230,7 @@ def delete_password(fernet):
                 found = True
                 del lines[i]
                 # Write the updated password file without the deleted line
-                with open('passwords.encrypted', 'w') as f:
+                with open(passwords_file, 'w') as f:
                     f.write(''.join(lines))
                 print("Password deleted successfully.")
                 break
