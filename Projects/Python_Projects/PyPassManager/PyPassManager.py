@@ -38,18 +38,26 @@ def set_master_password(fernet):
             break
 
 
-def check_master_password(fernet):
+def check_master_password(fernet, max_tries=3):
     with open('master_password.txt', 'r') as f:
         encrypted_password = f.read()
 
-    decrypted_password = fernet.decrypt(encrypted_password.encode()).decode()
-    input_password = input(
-        "\nEnter the master password to view passwords (type 'exit' to quit):\n> ")
+    for i in range(max_tries):
+        decrypted_password = fernet.decrypt(
+            encrypted_password.encode()).decode()
+        input_password = input(
+            f"\nEnter the master password to access PyPassManager (type 'exit' to quit) (Attempt {i+1} of {max_tries}):\n> ")
 
-    if input_password == "exit":
-        exit_program()
+        if input_password == "exit":
+            exit_program()
 
-    return input_password == decrypted_password
+        if input_password == decrypted_password:
+            return True
+        else:
+            print("\nIncorrect master password. Please try again.")
+
+    print(f"\nMax number of tries ({max_tries}) reached. Exiting program.")
+    exit_program()
 
 
 def main():
@@ -68,7 +76,7 @@ def main():
     while True:
         if check_master_password(fernet):
             program_mode = input(
-                "\nEnter 'view' to view passwords, 'add' to add a password, 'edit' to edit a password, 'delete' to delete a password, or 'exit' to quit:\n> ").lower()
+                "\nEnter... \n- 'view' to view passwords.\n- 'add' to add a password.\n- 'edit' to edit a password.\n- 'delete' to delete a password.\n- 'exit' to quit.\n> ").lower()
 
             if program_mode == "view":
                 view_passwords(fernet)
@@ -92,7 +100,7 @@ def main():
 
 
 def view_passwords(fernet):
-    print("Viewing passwords...\n")
+    print("\nViewing passwords...")
     # Code to view passwords goes here
     with open('passwords.encrypted', 'r') as f:
         for line in f.readlines():
@@ -104,7 +112,7 @@ def view_passwords(fernet):
 
 def add_password(fernet):
     # Code to add a password goes here
-    username = input("Enter the username: ")
+    username = input("\nEnter the username: ")
     password = input("Enter the password: ")
 
     encrypted_password = fernet.encrypt(password.encode()).decode()
@@ -112,13 +120,13 @@ def add_password(fernet):
     with open('passwords.encrypted', 'a') as f:
         f.write(f"{username} | {encrypted_password}\n")
 
-    print("Adding a password...")
+    print("Password added.")
 
 
 def edit_password(fernet):
     # Code to edit a password goes here
     username = input(
-        "Enter the username for the password you want to edit: ").strip()
+        "\nEnter the username for the password you want to edit: ").strip()
     with open('passwords.encrypted', 'r') as f:
         lines = f.readlines()
 
@@ -142,7 +150,7 @@ def edit_password(fernet):
 def delete_password(fernet):
     # Code to delete a password goes here
     username = input(
-        "Enter the username for the password you want to delete: ").strip()
+        "\nEnter the username for the password you want to delete: ").strip()
     with open('passwords.encrypted', 'r') as f:
         lines = f.readlines()
 
@@ -163,7 +171,7 @@ def delete_password(fernet):
 
 def exit_program():
     # Code to exit the program goes here
-    print("Exiting the program...")
+    print("\nExiting the program...")
     exit()
 
 
