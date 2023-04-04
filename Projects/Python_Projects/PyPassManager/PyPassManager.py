@@ -112,8 +112,14 @@ def view_passwords(fernet):
 
 def add_password(fernet):
     # Code to add a password goes here
-    username = input("\nEnter the username: ")
-    password = input("Enter the password: ")
+    username = input("\nEnter the username (type 'cancel' to quit):\n> ")
+    if username == "cancel":
+        print("Canceled adding password.")
+        return
+    password = input("Enter the password (type 'cancel' to quit):\n> ")
+    if password == "cancel":
+        print("Canceled adding password.")
+        return
 
     encrypted_password = fernet.encrypt(password.encode()).decode()
 
@@ -126,7 +132,7 @@ def add_password(fernet):
 def edit_password(fernet):
     # Code to edit a password goes here
     username = input(
-        "\nEnter the username for the password you want to edit: ").strip()
+        "\nEnter the username for the password you want to edit:\n> ").strip()
     with open('passwords.encrypted', 'r') as f:
         lines = f.readlines()
 
@@ -135,7 +141,7 @@ def edit_password(fernet):
         data = line.rstrip().split('|')
         if re.sub(r'\s', '', data[0].lower()) == re.sub(r'\s', '', username.lower()):
             found = True
-            new_password = input("Enter the new password: ")
+            new_password = input("Enter the new password:\n> ")
             encrypted_password = fernet.encrypt(new_password.encode()).decode()
             lines[i] = f"{data[0]} | {encrypted_password}\n"
             with open('passwords.encrypted', 'w') as f:
@@ -150,7 +156,7 @@ def edit_password(fernet):
 def delete_password(fernet):
     # Code to delete a password goes here
     username = input(
-        "\nEnter the username for the password you want to delete: ").strip()
+        "\nEnter the username for the password you want to delete:\n> ").strip()
     with open('passwords.encrypted', 'r') as f:
         lines = f.readlines()
 
