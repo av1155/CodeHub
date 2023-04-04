@@ -34,33 +34,33 @@ def load_key():
 
 
 def set_master_password(fernet):
+    password_file_path = os.path.join(os.path.dirname(
+        os.path.abspath(__file__)), "master_password.txt")
+
     while True:
         # get user input for password
         password = input(
             f"{colorama.Fore.YELLOW}Set the master password (at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character):{colorama.Style.RESET_ALL}\n> ")
         # check if password meets requirements
         if len(password) < 8:
-            print("Password must be at least 8 characters long.")
+            print("\nPassword must be at least 8 characters long.\n")
         elif not re.search(r'[A-Z]', password):
-            print("Password must contain at least one uppercase letter.")
+            print("\nPassword must contain at least one uppercase letter.\n")
         elif not re.search(r'[a-z]', password):
-            print("Password must contain at least one lowercase letter.")
+            print("\nPassword must contain at least one lowercase letter.\n")
         elif not re.search(r'[0-9]', password):
-            print("Password must contain at least one number.")
+            print("\nPassword must contain at least one number.\n")
         elif not re.search(r'[!@#$%^&*(),.?":{}|<>]', password):
-            print("Password must contain at least one special character.")
+            print("\nPassword must contain at least one special character.\n")
         else:
             # encrypt password using Fernet object and write to file
             encrypted_password = fernet.encrypt(password.encode()).decode()
-            password_file_path = os.path.join(os.path.dirname(
-                os.path.abspath(__file__)), "master_password.txt")
             with open(password_file_path, 'w') as f:
                 f.write(encrypted_password)
             break
 
+
 # function to check if master password is correct
-
-
 def check_master_password(fernet, max_tries=3):
     with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "master_password.txt"), "r") as f:
         encrypted_password = f.read()
@@ -71,7 +71,7 @@ def check_master_password(fernet, max_tries=3):
             encrypted_password.encode()).decode()
         # get user input for password
         input_password = input(
-            f"{colorama.Fore.YELLOW}\nEnter the master password to access PyPassManager (type 'exit' to quit) (Attempt {i+1} of {max_tries}):{colorama.Style.RESET_ALL}\n> ")
+            f"{colorama.Fore.YELLOW}\nEnter the master password to access PyPassManager (type 'exit' to quit program)\n(Attempt {i+1} of {max_tries}):{colorama.Style.RESET_ALL}\n> ")
 
         # exit program if user types 'exit'
         if input_password == "exit":
@@ -87,6 +87,7 @@ def check_master_password(fernet, max_tries=3):
     print(f"\n{colorama.Fore.RED}{colorama.Style.BRIGHT}Max number of tries ({max_tries}) reached. Exiting program.{colorama.Style.RESET_ALL}")
     exit_program()
 
+
 # Define a function to handle the main program logic
 
 
@@ -100,39 +101,63 @@ def main():
     # Create the Fernet object using the key
     fernet = Fernet(key)
 
-    if not os.path.exists(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'master_password.txt')):
-        # if master password file doesn't exist, prompt user to set one
+    # Check if passwords.encrypted file exists
+    password_file_path = os.path.join(os.path.dirname(
+        os.path.abspath(__file__)), "master_password.txt")
+    passwords_encrypted_file_path = os.path.join(
+        os.path.dirname(os.path.abspath(__file__)), 'passwords.encrypted')
+
+    try:
+        if os.path.exists(passwords_encrypted_file_path) and not os.path.exists(password_file_path):
+            os.remove(passwords_encrypted_file_path)
+            print(f"\n{colorama.Fore.RED}{colorama.Style.BRIGHT}Master password file not found. Deleting existing passwords file...{colorama.Style.RESET_ALL}\n")
+
+        if not os.path.exists(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'master_password.txt')):
+            # if master password file doesn't exist, prompt user to set one
+            set_master_password(fernet)
+
+    except FileNotFoundError:
+        os.remove(passwords_encrypted_file_path)
+        print(f"\n{colorama.Fore.RED}{colorama.Style.BRIGHT}Master password file not found. Deleting existing passwords file...{colorama.Style.RESET_ALL}\n")
         set_master_password(fernet)
 
+    # Flag to keep track of whether the user has entered the correct master password
+    password_entered = False
+
     while True:
-        if check_master_password(fernet):
-            # Prompt the user for the program mode
-            program_mode = input(
-                f"{colorama.Fore.BLUE}{colorama.Style.BRIGHT}\nEnter... \n- 'view' to view passwords.\n- 'add' to add a password.\n- 'edit' to edit a password.\n- 'delete' to delete a password.\n- 'exit' to quit.{colorama.Style.RESET_ALL}\n> ").lower()
-
-            # Determine which mode the user has selected and call the appropriate function
-            if program_mode == "view":
-                view_passwords(fernet)
-
-            elif program_mode == "add":
-                add_password(fernet)
-
-            elif program_mode == "edit":
-                edit_password(fernet)
-
-            elif program_mode == "delete":
-                delete_password(fernet)
-
-            elif program_mode == "exit":
-                exit_program()
-
+        if not password_entered:
+            # Check the master password
+            if check_master_password(fernet):
+                password_entered = True
             else:
                 print(
-                    f"\n{colorama.Fore.RED}{colorama.Style.BRIGHT}Invalid input. Please try again.{colorama.Style.RESET_ALL}")
+                    f"{colorama.Fore.RED}{colorama.Style.BRIGHT}Incorrect master password. Please try again.{colorama.Style.RESET_ALL}")
+                continue
 
-        # If the user enters the wrong master password, prompt them to try again
+        # Prompt the user for the program mode
+        program_mode = input(
+            f"{colorama.Fore.BLUE}{colorama.Style.BRIGHT}\nEnter... \n- 'view' to view passwords.\n- 'add' to add a password.\n- 'edit' to edit a password.\n- 'delete' to delete a password.\n- 'exit' to quit.{colorama.Style.RESET_ALL}\n> ").lower()
+
+        # Determine which mode the user has selected and call the appropriate function
+        if program_mode == "view":
+            view_passwords(fernet)
+
+        elif program_mode == "add":
+            add_password(fernet)
+
+        elif program_mode == "edit":
+            edit_password(fernet)
+
+        elif program_mode == "delete":
+            delete_password(fernet)
+
+        elif program_mode == "exit":
+            exit_program()
+
         else:
-            print(f"{colorama.Fore.RED}{colorama.Style.BRIGHT}Incorrect master password. Please try again.{colorama.Style.RESET_ALL}")
+            print(
+                f"\n{colorama.Fore.RED}{colorama.Style.BRIGHT}Invalid input. Please try again.{colorama.Style.RESET_ALL}")
+
 
 # Define a function to view passwords
 
