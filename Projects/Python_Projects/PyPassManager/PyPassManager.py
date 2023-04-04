@@ -68,13 +68,19 @@ def main():
     while True:
         if check_master_password(fernet):
             program_mode = input(
-                "\nEnter 'view' to view passwords, 'add' to add a password, or 'exit' to quit:\n> ").lower()
+                "\nEnter 'view' to view passwords, 'add' to add a password, 'edit' to edit a password, 'delete' to delete a password, or 'exit' to quit:\n> ").lower()
 
             if program_mode == "view":
                 view_passwords(fernet)
 
             elif program_mode == "add":
                 add_password(fernet)
+
+            elif program_mode == "edit":
+                edit_password(fernet)
+
+            elif program_mode == "delete":
+                delete_password(fernet)
 
             elif program_mode == "exit":
                 exit_program()
@@ -107,6 +113,52 @@ def add_password(fernet):
         f.write(f"{username} | {encrypted_password}\n")
 
     print("Adding a password...")
+
+
+def edit_password(fernet):
+    # Code to edit a password goes here
+    username = input(
+        "Enter the username for the password you want to edit: ").strip()
+    with open('passwords.encrypted', 'r') as f:
+        lines = f.readlines()
+
+    found = False
+    for i, line in enumerate(lines):
+        data = line.rstrip().split('|')
+        if re.sub(r'\s', '', data[0].lower()) == re.sub(r'\s', '', username.lower()):
+            found = True
+            new_password = input("Enter the new password: ")
+            encrypted_password = fernet.encrypt(new_password.encode()).decode()
+            lines[i] = f"{data[0]} | {encrypted_password}\n"
+            with open('passwords.encrypted', 'w') as f:
+                f.write(''.join(lines))
+            print("Password edited successfully.")
+            break
+
+    if not found:
+        print("No password found for that username.")
+
+
+def delete_password(fernet):
+    # Code to delete a password goes here
+    username = input(
+        "Enter the username for the password you want to delete: ").strip()
+    with open('passwords.encrypted', 'r') as f:
+        lines = f.readlines()
+
+    found = False
+    for i, line in enumerate(lines):
+        data = line.rstrip().split('|')
+        if re.sub(r'\s', '', data[0].lower()) == re.sub(r'\s', '', username.lower()):
+            found = True
+            del lines[i]
+            with open('passwords.encrypted', 'w') as f:
+                f.write(''.join(lines))
+            print("Password deleted successfully.")
+            break
+
+    if not found:
+        print("No password found for that username.")
 
 
 def exit_program():
