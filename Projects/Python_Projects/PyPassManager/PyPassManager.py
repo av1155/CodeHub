@@ -20,7 +20,7 @@ def load_key():
 def set_master_password(fernet):
     while True:
         password = input(
-            "Set the master password (at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character): ")
+            "Set the master password (at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character):\n> ")
         if len(password) < 8:
             print("Password must be at least 8 characters long.")
         elif not re.search(r'[A-Z]', password):
