@@ -35,7 +35,7 @@ def set_master_password(fernet):
     while True:
         # get user input for password
         password = input(
-            "Set the master password (at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character):\n> ")
+            f"{colorama.Fore.YELLOW}Set the master password (at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character):{colorama.Style.RESET_ALL}\n> ")
         # check if password meets requirements
         if len(password) < 8:
             print("Password must be at least 8 characters long.")
@@ -106,7 +106,7 @@ def main():
         if check_master_password(fernet):
             # Prompt the user for the program mode
             program_mode = input(
-                f"{colorama.Fore.BLUE}\nEnter... \n- 'view' to view passwords.\n- 'add' to add a password.\n- 'edit' to edit a password.\n- 'delete' to delete a password.\n- 'exit' to quit.{colorama.Style.RESET_ALL}\n> ").lower()
+                f"{colorama.Fore.BLUE}{colorama.Style.BRIGHT}\nEnter... \n- 'view' to view passwords.\n- 'add' to add a password.\n- 'edit' to edit a password.\n- 'delete' to delete a password.\n- 'exit' to quit.{colorama.Style.RESET_ALL}\n> ").lower()
 
             # Determine which mode the user has selected and call the appropriate function
             if program_mode == "view":
@@ -136,7 +136,7 @@ def main():
 
 
 def view_passwords(fernet):
-    print(f"{colorama.Fore.GREEN}\nViewing passwords...{colorama.Style.RESET_ALL}")
+    print(f"{colorama.Fore.GREEN}\nViewing passwords...{colorama.Style.RESET_ALL}\n")
     try:
         # Open the encrypted passwords file and read each line
         with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'passwords.encrypted'), 'r') as f:
