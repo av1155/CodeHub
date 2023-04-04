@@ -1,7 +1,7 @@
 from cryptography.fernet import Fernet
 import os
 import re
-
+import colorama
 # function to generate encryption key
 
 
@@ -15,9 +15,10 @@ def write_key():
         # write key to file
         with open(key_file_path, "wb") as key_file:
             key_file.write(key)
-            print("Key generated.")
+            print(
+                f"{colorama.Fore.GREEN}Key generated.{colorama.Style.RESET_ALL}")
     else:
-        print("Key already exists.")
+        print(f"{colorama.Fore.GREEN}Key already exists.{colorama.Style.RESET_ALL}")
 
 # function to load encryption key from file
 
@@ -68,7 +69,7 @@ def check_master_password(fernet, max_tries=3):
             encrypted_password.encode()).decode()
         # get user input for password
         input_password = input(
-            f"\nEnter the master password to access PyPassManager (type 'exit' to quit) (Attempt {i+1} of {max_tries}):\n> ")
+            f"{colorama.Fore.YELLOW}\nEnter the master password to access PyPassManager (type 'exit' to quit) (Attempt {i+1} of {max_tries}):{colorama.Style.RESET_ALL}\n> ")
 
         # exit program if user types 'exit'
         if input_password == "exit":
@@ -77,10 +78,11 @@ def check_master_password(fernet, max_tries=3):
         if input_password == decrypted_password:
             return True
         else:
-            print("\nIncorrect master password. Please try again.")
+            print(
+                f"{colorama.Fore.RED}{colorama.Style.BRIGHT}\nIncorrect master password. Please try again.{colorama.Style.RESET_ALL}")
 
     # exit program if maximum number of tries is reached
-    print(f"\nMax number of tries ({max_tries}) reached. Exiting program.")
+    print(f"\n{colorama.Fore.RED}{colorama.Style.BRIGHT}Max number of tries ({max_tries}) reached. Exiting program.{colorama.Style.RESET_ALL}")
     exit_program()
 
 # Define a function to handle the main program logic
@@ -104,7 +106,7 @@ def main():
         if check_master_password(fernet):
             # Prompt the user for the program mode
             program_mode = input(
-                "\nEnter... \n- 'view' to view passwords.\n- 'add' to add a password.\n- 'edit' to edit a password.\n- 'delete' to delete a password.\n- 'exit' to quit.\n> ").lower()
+                f"{colorama.Fore.BLUE}\nEnter... \n- 'view' to view passwords.\n- 'add' to add a password.\n- 'edit' to edit a password.\n- 'delete' to delete a password.\n- 'exit' to quit.{colorama.Style.RESET_ALL}\n> ").lower()
 
             # Determine which mode the user has selected and call the appropriate function
             if program_mode == "view":
@@ -123,17 +125,18 @@ def main():
                 exit_program()
 
             else:
-                print("Invalid input. Please try again.")
+                print(
+                    f"{colorama.Fore.RED}{colorama.Style.BRIGHT}Invalid input. Please try again.{colorama.Style.RESET_ALL}")
 
         # If the user enters the wrong master password, prompt them to try again
         else:
-            print("Incorrect master password. Please try again.")
+            print(f"{colorama.Fore.RED}{colorama.Style.BRIGHT}Incorrect master password. Please try again.{colorama.Style.RESET_ALL}")
 
 # Define a function to view passwords
 
 
 def view_passwords(fernet):
-    print("\nViewing passwords...")
+    print(f"{colorama.Fore.GREEN}\nViewing passwords...{colorama.Style.RESET_ALL}")
     try:
         # Open the encrypted passwords file and read each line
         with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'passwords.encrypted'), 'r') as f:
@@ -143,9 +146,10 @@ def view_passwords(fernet):
                 user, password = data.split('|')
                 # Decrypt the password and print the username and decrypted password
                 decrypted_password = fernet.decrypt(password.encode()).decode()
-                print(f"User: {user}| Password: {decrypted_password}")
+                print(
+                    f"{colorama.Fore.BLUE}User: {colorama.Style.RESET_ALL}{colorama.Fore.GREEN}{user}{colorama.Style.RESET_ALL}{colorama.Fore.BLUE}| {colorama.Style.RESET_ALL}{colorama.Fore.BLUE}Password: {colorama.Style.RESET_ALL}{colorama.Fore.GREEN}{decrypted_password}{colorama.Style.RESET_ALL}")
     except FileNotFoundError:
-        print("No passwords found. Please create a password using the 'add' command.")
+        print(f"{colorama.Fore.RED}No passwords found. Please create a password using the 'add' command.{colorama.Style.RESET_ALL}")
 
 # Define a function to add a password
 
@@ -154,11 +158,11 @@ def add_password(fernet):
     # Prompt the user for a new username and password
     username = input("\nEnter the username (type 'cancel' to quit):\n> ")
     if username == "cancel":
-        print("Canceled adding password.")
+        print(f"{colorama.Fore.RED}Canceled adding password.{colorama.Style.RESET_ALL}")
         return
     password = input("Enter the password (type 'cancel' to quit):\n> ")
     if password == "cancel":
-        print("Canceled adding password.")
+        print(f"{colorama.Fore.RED}Canceled adding password.{colorama.Style.RESET_ALL}")
         return
 
     # Encrypt the password and append the new username and encrypted password to the passwords file
@@ -167,7 +171,7 @@ def add_password(fernet):
     with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'passwords.encrypted'), 'a') as f:
         f.write(f"{username} | {encrypted_password}\n")
 
-    print("Password added.")
+    print(f"{colorama.Fore.GREEN}Password added.{colorama.Style.RESET_ALL}")
 
 # Define a function to edit a password
 
@@ -196,14 +200,16 @@ def edit_password(fernet):
                 lines[i] = f"{data[0]} | {encrypted_password}\n"
                 with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'passwords.encrypted'), 'w') as f:
                     f.write(''.join(lines))
-                print("Password edited successfully.")
+                print(
+                    f"{colorama.Fore.GREEN}Password edited successfully.{colorama.Style.RESET_ALL}")
                 break
 
         if not found:
-            print("No password found for that username.")
+            print(
+                f"{colorama.Fore.RED}No password found for that username.{colorama.Style.RESET_ALL}")
 
     except FileNotFoundError:
-        print("No passwords found. Please create a password using the 'add' command.")
+        print(f"{colorama.Fore.RED}No passwords found. Please create a password using the 'add' command.{colorama.Style.RESET_ALL}")
 
 # Define a function to delete a password
 
@@ -232,20 +238,22 @@ def delete_password(fernet):
                 # Write the updated password file without the deleted line
                 with open(passwords_file, 'w') as f:
                     f.write(''.join(lines))
-                print("Password deleted successfully.")
+                print(
+                    f"{colorama.Fore.GREEN}Password deleted successfully.{colorama.Style.RESET_ALL}")
                 break
 
         if not found:
-            print("No password found for that username.")
+            print(
+                f"{colorama.Fore.RED}No password found for that username.{colorama.Style.RESET_ALL}")
 
     except FileNotFoundError:
-        print("No passwords found. Please create a password using the 'add' command.")
+        print(f"{colorama.Fore.RED}No passwords found. Please create a password using the 'add' command.{colorama.Style.RESET_ALL}")
 
 # Function to exit the program
 
 
 def exit_program():
-    print("\nExiting the program...")
+    print(f"{colorama.Fore.GREEN}\nExiting the program...{colorama.Style.RESET_ALL}")
     exit()
 
 
