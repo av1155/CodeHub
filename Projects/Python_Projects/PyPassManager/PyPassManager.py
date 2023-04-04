@@ -1,7 +1,7 @@
 from cryptography.fernet import Fernet
 import os
 import re
-
+import colorama
 # function to generate encryption key
 
 
@@ -15,7 +15,8 @@ def write_key():
         # write key to file
         with open(key_file_path, "wb") as key_file:
             key_file.write(key)
-            print("Key generated.")
+            print(
+                f"{colorama.Fore.GREEN}{colorama.Style.BRIGHT}Key generated.{colorama.Style.RESET_ALL}")
     else:
         print("Key already exists.")
 
@@ -77,10 +78,11 @@ def check_master_password(fernet, max_tries=3):
         if input_password == decrypted_password:
             return True
         else:
-            print("\nIncorrect master password. Please try again.")
+            print(
+                f"{colorama.Fore.RED}{colorama.Style.BRIGHT}\nIncorrect master password. Please try again.{colorama.Style.RESET_ALL}")
 
     # exit program if maximum number of tries is reached
-    print(f"\nMax number of tries ({max_tries}) reached. Exiting program.")
+    print(f"\n{colorama.Fore.RED}{colorama.Style.BRIGHT}Max number of tries ({max_tries}) reached. Exiting program.{colorama.Style.RESET_ALL}")
     exit_program()
 
 # Define a function to handle the main program logic
@@ -104,7 +106,7 @@ def main():
         if check_master_password(fernet):
             # Prompt the user for the program mode
             program_mode = input(
-                "\nEnter... \n- 'view' to view passwords.\n- 'add' to add a password.\n- 'edit' to edit a password.\n- 'delete' to delete a password.\n- 'exit' to quit.\n> ").lower()
+                f"{colorama.Fore.BLUE}\nEnter... \n- 'view' to view passwords.\n- 'add' to add a password.\n- 'edit' to edit a password.\n- 'delete' to delete a password.\n- 'exit' to quit.{colorama.Style.RESET_ALL}\n> ").lower()
 
             # Determine which mode the user has selected and call the appropriate function
             if program_mode == "view":
@@ -123,11 +125,12 @@ def main():
                 exit_program()
 
             else:
-                print("Invalid input. Please try again.")
+                print(
+                    f"{colorama.Fore.RED}{colorama.Style.BRIGHT}Invalid input. Please try again.{colorama.Style.RESET_ALL}")
 
         # If the user enters the wrong master password, prompt them to try again
         else:
-            print("Incorrect master password. Please try again.")
+            print(f"{colorama.Fore.RED}{colorama.Style.BRIGHT}Incorrect master password. Please try again.{colorama.Style.RESET_ALL}")
 
 # Define a function to view passwords
 
