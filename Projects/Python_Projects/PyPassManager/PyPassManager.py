@@ -2,25 +2,36 @@ from cryptography.fernet import Fernet
 import os
 import re
 
+# function to generate encryption key
+
 
 def write_key():
+    # check if key file exists
     if not os.path.exists("key.key"):
+        # generate key
         key = Fernet.generate_key()
+        # write key to file
         with open("key.key", "wb") as key_file:
             key_file.write(key)
             print("Key generated.")
     else:
         print("Key already exists.")
 
+# function to load encryption key from file
+
 
 def load_key():
     return open("key.key", "rb").read()
 
+# function to set the master password
+
 
 def set_master_password(fernet):
     while True:
+        # get user input for password
         password = input(
             "Set the master password (at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character):\n> ")
+        # check if password meets requirements
         if len(password) < 8:
             print("Password must be at least 8 characters long.")
         elif not re.search(r'[A-Z]', password):
@@ -32,10 +43,13 @@ def set_master_password(fernet):
         elif not re.search(r'[!@#$%^&*(),.?":{}|<>]', password):
             print("Password must contain at least one special character.")
         else:
+            # encrypt password using Fernet object and write to file
             encrypted_password = fernet.encrypt(password.encode()).decode()
             with open('master_password.txt', 'w') as f:
                 f.write(encrypted_password)
             break
+
+# function to check if master password is correct
 
 
 def check_master_password(fernet, max_tries=3):
@@ -43,11 +57,14 @@ def check_master_password(fernet, max_tries=3):
         encrypted_password = f.read()
 
     for i in range(max_tries):
+        # decrypt stored password and check if input password matches
         decrypted_password = fernet.decrypt(
             encrypted_password.encode()).decode()
+        # get user input for password
         input_password = input(
             f"\nEnter the master password to access PyPassManager (type 'exit' to quit) (Attempt {i+1} of {max_tries}):\n> ")
 
+        # exit program if user types 'exit'
         if input_password == "exit":
             exit_program()
 
@@ -56,8 +73,11 @@ def check_master_password(fernet, max_tries=3):
         else:
             print("\nIncorrect master password. Please try again.")
 
+    # exit program if maximum number of tries is reached
     print(f"\nMax number of tries ({max_tries}) reached. Exiting program.")
     exit_program()
+
+# Define a function to handle the main program logic
 
 
 def main():
@@ -71,13 +91,16 @@ def main():
     fernet = Fernet(key)
 
     if not os.path.exists('master_password.txt'):
+        # if master password file doesn't exist, prompt user to set one
         set_master_password(fernet)
 
     while True:
         if check_master_password(fernet):
+            # Prompt the user for the program mode
             program_mode = input(
                 "\nEnter... \n- 'view' to view passwords.\n- 'add' to add a password.\n- 'edit' to edit a password.\n- 'delete' to delete a password.\n- 'exit' to quit.\n> ").lower()
 
+            # Determine which mode the user has selected and call the appropriate function
             if program_mode == "view":
                 view_passwords(fernet)
 
@@ -95,25 +118,34 @@ def main():
 
             else:
                 print("Invalid input. Please try again.")
+
+        # If the user enters the wrong master password, prompt them to try again
         else:
             print("Incorrect master password. Please try again.")
+
+# Define a function to view passwords
 
 
 def view_passwords(fernet):
     print("\nViewing passwords...")
     try:
+        # Open the encrypted passwords file and read each line
         with open('passwords.encrypted', 'r') as f:
             for line in f.readlines():
+                # Split the line into the username and password
                 data = (line.rstrip())
                 user, password = data.split('|')
+                # Decrypt the password and print the username and decrypted password
                 decrypted_password = fernet.decrypt(password.encode()).decode()
                 print(f"User: {user}| Password: {decrypted_password}")
     except FileNotFoundError:
         print("No passwords found. Please create a password using the 'add' command.")
 
+# Define a function to add a password
+
 
 def add_password(fernet):
-    # Code to add a password goes here
+    # Prompt the user for a new username and password
     username = input("\nEnter the username (type 'cancel' to quit):\n> ")
     if username == "cancel":
         print("Canceled adding password.")
@@ -123,6 +155,7 @@ def add_password(fernet):
         print("Canceled adding password.")
         return
 
+    # Encrypt the password and append the new username and encrypted password to the passwords file
     encrypted_password = fernet.encrypt(password.encode()).decode()
 
     with open('passwords.encrypted', 'a') as f:
@@ -130,58 +163,83 @@ def add_password(fernet):
 
     print("Password added.")
 
+# Define a function to edit a password
+
 
 def edit_password(fernet):
-    # Code to edit a password goes here
-    username = input(
-        "\nEnter the username for the password you want to edit:\n> ").strip()
-    with open('passwords.encrypted', 'r') as f:
-        lines = f.readlines()
+    try:
+        # Prompt the user for the username of the password they want to edit
+        username = input(
+            "\nEnter the username for the password you want to edit:\n> ").strip()
 
-    found = False
-    for i, line in enumerate(lines):
-        data = line.rstrip().split('|')
-        if re.sub(r'\s', '', data[0].lower()) == re.sub(r'\s', '', username.lower()):
-            found = True
-            new_password = input("Enter the new password:\n> ")
-            encrypted_password = fernet.encrypt(new_password.encode()).decode()
-            lines[i] = f"{data[0]} | {encrypted_password}\n"
-            with open('passwords.encrypted', 'w') as f:
-                f.write(''.join(lines))
-            print("Password edited successfully.")
-            break
+        # Open the encrypted password file for reading
+        with open('passwords.encrypted', 'r') as f:
+            lines = f.readlines()
 
-    if not found:
-        print("No password found for that username.")
+        found = False
+        # Find the line corresponding to the username and replace it with a new encrypted password
+        for i, line in enumerate(lines):
+            data = line.rstrip().split('|')
+            if re.sub(r'\s', '', data[0].lower()) == re.sub(r'\s', '', username.lower()):
+                found = True
+                # Prompt the user for the new password and encrypt it
+                new_password = input("Enter the new password:\n> ")
+                encrypted_password = fernet.encrypt(
+                    new_password.encode()).decode()
+                # Replace the old password with the new encrypted password in the file
+                lines[i] = f"{data[0]} | {encrypted_password}\n"
+                with open('passwords.encrypted', 'w') as f:
+                    f.write(''.join(lines))
+                print("Password edited successfully.")
+                break
+
+        if not found:
+            print("No password found for that username.")
+
+    except FileNotFoundError:
+        print("No passwords found. Please create a password using the 'add' command.")
+
+# Define a function to delete a password
 
 
 def delete_password(fernet):
-    # Code to delete a password goes here
-    username = input(
-        "\nEnter the username for the password you want to delete:\n> ").strip()
-    with open('passwords.encrypted', 'r') as f:
-        lines = f.readlines()
+    try:
+        # Prompt the user for the username of the password they want to delete
+        username = input(
+            "\nEnter the username for the password you want to delete:\n> ").strip()
 
-    found = False
-    for i, line in enumerate(lines):
-        data = line.rstrip().split('|')
-        if re.sub(r'\s', '', data[0].lower()) == re.sub(r'\s', '', username.lower()):
-            found = True
-            del lines[i]
-            with open('passwords.encrypted', 'w') as f:
-                f.write(''.join(lines))
-            print("Password deleted successfully.")
-            break
+        # Open the encrypted password file for reading
+        with open('passwords.encrypted', 'r') as f:
+            lines = f.readlines()
 
-    if not found:
-        print("No password found for that username.")
+        found = False
+        # Find the line corresponding to the username and delete it
+        for i, line in enumerate(lines):
+            data = line.rstrip().split('|')
+            if re.sub(r'\s', '', data[0].lower()) == re.sub(r'\s', '', username.lower()):
+                found = True
+                del lines[i]
+                # Write the updated password file without the deleted line
+                with open('passwords.encrypted', 'w') as f:
+                    f.write(''.join(lines))
+                print("Password deleted successfully.")
+                break
+
+        if not found:
+            print("No password found for that username.")
+
+    except FileNotFoundError:
+        print("No passwords found. Please create a password using the 'add' command.")
+
+# Function to exit the program
 
 
 def exit_program():
-    # Code to exit the program goes here
     print("\nExiting the program...")
     exit()
 
 
+# Check if this script is being run as the main program
 if __name__ == "__main__":
+    # Call the main function to start the program
     main()
