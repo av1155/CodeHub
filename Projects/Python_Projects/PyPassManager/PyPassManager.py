@@ -1,11 +1,12 @@
 from cryptography.fernet import Fernet
+from tabulate import tabulate
+import colorama
+import pwinput
 import os
 import re
-import colorama
-from tabulate import tabulate
+
+
 # function to generate encryption key
-
-
 def write_key():
     # check if key file exists
     key_file_path = os.path.join(os.path.dirname(
@@ -22,24 +23,22 @@ def write_key():
         print(
             f"\n{colorama.Fore.GREEN}Key already exists.{colorama.Style.RESET_ALL}")
 
+
 # function to load encryption key from file
-
-
 def load_key():
     key_file_path = os.path.join(os.path.dirname(
         os.path.abspath(__file__)), "key.key")
     return open(key_file_path, "rb").read()
 
+
 # function to set the master password
-
-
 def set_master_password(fernet):
     password_file_path = os.path.join(os.path.dirname(
         os.path.abspath(__file__)), "master_password.txt")
 
     while True:
         # get user input for password
-        password = input(
+        password = pwinput.pwinput(
             f"{colorama.Fore.YELLOW}Set the master password (at least 8 characters, one uppercase letter, one lowercase letter, one number, and one special character):{colorama.Style.RESET_ALL}\n> ")
         # check if password meets requirements
         if len(password) < 8:
@@ -70,7 +69,7 @@ def check_master_password(fernet, max_tries=3):
         decrypted_password = fernet.decrypt(
             encrypted_password.encode()).decode()
         # get user input for password
-        input_password = input(
+        input_password = pwinput.pwinput(
             f"{colorama.Fore.YELLOW}\nEnter the master password to access PyPassManager (type 'exit' to quit program)\n(Attempt {i+1} of {max_tries}):{colorama.Style.RESET_ALL}\n> ")
 
         # exit program if user types 'exit'
@@ -89,8 +88,6 @@ def check_master_password(fernet, max_tries=3):
 
 
 # Define a function to handle the main program logic
-
-
 def main():
     # Generate the encryption key if it doesn't already exist
     write_key()
@@ -160,8 +157,6 @@ def main():
 
 
 # Define a function to view passwords
-
-
 def view_passwords(fernet):
     print(f"{colorama.Fore.GREEN}\nViewing passwords...{colorama.Style.RESET_ALL}\n")
     try:
@@ -183,8 +178,6 @@ def view_passwords(fernet):
 
 
 # Define a function to add a password
-
-
 def add_password(fernet):
     # Prompt the user for a new website, username, and password
     website = input("\nEnter the website (type 'cancel' to quit):\n> ")
@@ -208,9 +201,8 @@ def add_password(fernet):
 
     print(f"\n{colorama.Fore.GREEN}Password added.{colorama.Style.RESET_ALL}")
 
+
 # Define a function to edit a password
-
-
 def edit_password(fernet):
     try:
         # Prompt the user for the website of the password they want to edit
@@ -246,9 +238,8 @@ def edit_password(fernet):
     except FileNotFoundError:
         print(f"{colorama.Fore.RED}No passwords found. Please create a password using the 'add' command.{colorama.Style.RESET_ALL}")
 
+
 # Define a function to delete a password
-
-
 def delete_password(fernet):
     try:
         # Prompt the user for the website of the password they want to delete
@@ -284,9 +275,8 @@ def delete_password(fernet):
     except FileNotFoundError:
         print(f"{colorama.Fore.RED}No passwords found. Please create a password using the 'add' command.{colorama.Style.RESET_ALL}")
 
+
 # Function to exit the program
-
-
 def exit_program():
     print(f"{colorama.Fore.GREEN}\nExiting the program...{colorama.Style.RESET_ALL}")
     exit()
