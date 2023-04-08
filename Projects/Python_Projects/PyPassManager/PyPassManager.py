@@ -254,16 +254,16 @@ def main():
 
         # Determine which mode the user has selected and call the appropriate function
         if program_mode == "view":
-            view_passwords(fernet)
+            view_passwords(passwords_encrypted_file_path, fernet)
 
         elif program_mode == "add":
-            add_password(fernet)
+            add_password(passwords_encrypted_file_path, fernet)
 
         elif program_mode == "edit":
-            edit_password(fernet)
+            edit_password(passwords_encrypted_file_path, fernet)
 
         elif program_mode == "delete":
-            delete_password(fernet)
+            delete_password(passwords_encrypted_file_path, fernet)
 
         elif program_mode == "exit":
             exit_program()
