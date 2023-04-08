@@ -7,10 +7,8 @@ import re
 
 
 # function to generate encryption key
-def write_key():
+def write_key(key_file_path):
     # check if key file exists
-    key_file_path = os.path.join(os.path.dirname(
-        os.path.abspath(__file__)), "key.key")
     if not os.path.exists(key_file_path):
         # generate key
         key = Fernet.generate_key()
@@ -25,17 +23,12 @@ def write_key():
 
 
 # function to load encryption key from file
-def load_key():
-    key_file_path = os.path.join(os.path.dirname(
-        os.path.abspath(__file__)), "key.key")
+def load_key(key_file_path):
     return open(key_file_path, "rb").read()
 
 
 # function to set the master password
-def set_master_password(fernet):
-    password_file_path = os.path.join(os.path.dirname(
-        os.path.abspath(__file__)), "master_password.txt")
-
+def set_master_password(master_password_file_path, fernet):
     while True:
         # get user input for password
         password = pwinput.pwinput(
@@ -54,14 +47,14 @@ def set_master_password(fernet):
         else:
             # encrypt password using Fernet object and write to file
             encrypted_password = fernet.encrypt(password.encode()).decode()
-            with open(password_file_path, 'w') as f:
+            with open(master_password_file_path, 'w') as f:
                 f.write(encrypted_password)
             break
 
 
 # function to check if master password is correct
-def check_master_password(fernet, max_tries=3):
-    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "master_password.txt"), "r") as f:
+def check_master_password(master_password_file_path, fernet, max_tries=3):
+    with open(master_password_file_path, "r") as f:
         encrypted_password = f.read()
 
     for i in range(max_tries):
@@ -87,36 +80,160 @@ def check_master_password(fernet, max_tries=3):
     exit_program()
 
 
+# Define a function to view passwords
+def view_passwords(passwords_encrypted_file_path, fernet):
+    print(f"{colorama.Fore.GREEN}\nViewing passwords...{colorama.Style.RESET_ALL}\n")
+    try:
+        # Open the encrypted passwords file and read each line
+        with open(passwords_encrypted_file_path, 'r') as f:
+            table_data = [['Website', 'Username', 'Password']]
+            for line in f.readlines():
+                # Split the line into the website, username, and password
+                data = (line.rstrip())
+                website, user, password = data.split('|')
+                # Decrypt the password and add the website, username, and decrypted password to the table data
+                decrypted_password = fernet.decrypt(password.encode()).decode()
+                table_data.append([website, user, decrypted_password])
+            # Output the table
+            print(tabulate(table_data, headers='firstrow', tablefmt='psql'))
+
+    except FileNotFoundError:
+        print(f"{colorama.Fore.RED}No passwords found. Please create a password using the 'add' command.{colorama.Style.RESET_ALL}")
+
+
+# Define a function to add a password
+def add_password(passwords_encrypted_file_path, fernet):
+    # Prompt the user for a new website, username, and password
+    website = input("\nEnter the website (type 'cancel' to quit):\n> ")
+    if website == "cancel":
+        print(f"{colorama.Fore.RED}Canceled adding password.{colorama.Style.RESET_ALL}")
+        return
+    username = input("\nEnter the username (type 'cancel' to quit):\n> ")
+    if username == "cancel":
+        print(f"{colorama.Fore.RED}Canceled adding password.{colorama.Style.RESET_ALL}")
+        return
+    password = input("\nEnter the password (type 'cancel' to quit):\n> ")
+    if password == "cancel":
+        print(f"{colorama.Fore.RED}Canceled adding password.{colorama.Style.RESET_ALL}")
+        return
+
+    # Encrypt the password and append the new username and encrypted password to the passwords file
+    encrypted_password = fernet.encrypt(password.encode()).decode()
+
+    with open(passwords_encrypted_file_path, 'a') as f:
+        f.write(f"{website} | {username} | {encrypted_password}\n")
+
+    print(f"\n{colorama.Fore.GREEN}Password added.{colorama.Style.RESET_ALL}")
+
+
+# Define a function to edit a password
+def edit_password(passwords_encrypted_file_path, fernet):
+    try:
+        # Prompt the user for the website of the password they want to edit
+        website = input(
+            "\nEnter the website for the password you want to edit:\n> ").strip()
+
+        # Open the encrypted password file for reading
+        with open(passwords_encrypted_file_path, 'r') as f:
+            lines = f.readlines()
+
+        found = False
+        # Find the line corresponding to the website and replace it with a new encrypted password
+        for i, line in enumerate(lines):
+            data = line.rstrip().split('|')
+            if re.sub(r'\s', '', data[0].lower()) == re.sub(r'\s', '', website.lower()):
+                found = True
+                # Prompt the user for the new password and encrypt it
+                new_password = input("\nEnter the new password:\n> ")
+                encrypted_password = fernet.encrypt(
+                    new_password.encode()).decode()
+                # Replace the old password with the new encrypted password in the file
+                lines[i] = f"{data[0]} | {data[1]} | {encrypted_password}\n"
+                with open(passwords_encrypted_file_path, 'w') as f:
+                    f.write(''.join(lines))
+                print(
+                    f"{colorama.Fore.GREEN}Password edited successfully.{colorama.Style.RESET_ALL}")
+                break
+
+        if not found:
+            print(
+                f"{colorama.Fore.RED}No password found for that website.{colorama.Style.RESET_ALL}")
+
+    except FileNotFoundError:
+        print(f"{colorama.Fore.RED}No passwords found. Please create a password using the 'add' command.{colorama.Style.RESET_ALL}")
+
+
+# Define a function to delete a password
+def delete_password(passwords_encrypted_file_path, fernet):
+    try:
+        # Prompt the user for the website of the password they want to delete
+        website = input(
+            "\nEnter the website for the password you want to delete:\n> ").strip()
+
+        # Open the encrypted password file for reading
+        with open(passwords_encrypted_file_path, 'r') as f:
+            lines = f.readlines()
+
+        found = False
+        # Find the line corresponding to the website and delete it
+        for i, line in enumerate(lines):
+            data = line.rstrip().split('|')
+            if re.sub(r'\s', '', data[0].lower()) == re.sub(r'\s', '', website.lower()):
+                found = True
+                del lines[i]
+                # Write the updated password file without the deleted line
+                with open(passwords_encrypted_file_path, 'w') as f:
+                    f.write(''.join(lines))
+                print(
+                    f"{colorama.Fore.GREEN}Password deleted successfully.{colorama.Style.RESET_ALL}")
+                break
+
+        if not found:
+            print(
+                f"{colorama.Fore.RED}No password found for that website.{colorama.Style.RESET_ALL}")
+
+    except FileNotFoundError:
+        print(f"{colorama.Fore.RED}No passwords found. Please create a password using the 'add' command.{colorama.Style.RESET_ALL}")
+
+
+# Function to exit the program
+def exit_program():
+    print(f"{colorama.Fore.GREEN}\nExiting the program...{colorama.Style.RESET_ALL}")
+    exit()
+
+
 # Define a function to handle the main program logic
 def main():
-    # Generate the encryption key if it doesn't already exist
-    write_key()
+    # Set paths for key.key, passwords.encrypted, and master_password.txt files.
+    key_file_path = os.path.join(os.path.dirname(
+        os.path.abspath(__file__)), "key.key")
+    passwords_encrypted_file_path = os.path.join(
+        os.path.dirname(os.path.abspath(__file__)), 'passwords.encrypted')
+    master_password_file_path = os.path.join(os.path.dirname(
+        os.path.abspath(__file__)), 'master_password.txt')
 
-    # Load the key from the key file
-    key = load_key()
+    # Generate and load the key from the key file if it doesn't already exist.
+    write_key(key_file_path)
+    key = load_key(key_file_path)
 
     # Create the Fernet object using the key
     fernet = Fernet(key)
 
     # Check if passwords.encrypted file exists
-    password_file_path = os.path.join(os.path.dirname(
-        os.path.abspath(__file__)), "master_password.txt")
-    passwords_encrypted_file_path = os.path.join(
-        os.path.dirname(os.path.abspath(__file__)), 'passwords.encrypted')
-
     try:
-        if os.path.exists(passwords_encrypted_file_path) and not os.path.exists(password_file_path):
+        # if master_password.txt does not exist, but passwords.encrypted file exists... delete passwords.encrypted file.
+        if os.path.exists(passwords_encrypted_file_path) and not os.path.exists(master_password_file_path):
             os.remove(passwords_encrypted_file_path)
             print(f"\n{colorama.Fore.RED}{colorama.Style.BRIGHT}Master password file not found. Deleting existing passwords file...{colorama.Style.RESET_ALL}\n")
 
-        if not os.path.exists(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'master_password.txt')):
-            # if master password file doesn't exist, prompt user to set one
-            set_master_password(fernet)
+        # if master password file doesn't exist, prompt user to set one
+        if not os.path.exists(master_password_file_path):
+            set_master_password(master_password_file_path, fernet)
 
     except FileNotFoundError:
         os.remove(passwords_encrypted_file_path)
         print(f"\n{colorama.Fore.RED}{colorama.Style.BRIGHT}Master password file not found. Deleting existing passwords file...{colorama.Style.RESET_ALL}\n")
-        set_master_password(fernet)
+        set_master_password(master_password_file_path, fernet)
 
     # Flag to keep track of whether the user has entered the correct master password
     password_entered = False
@@ -124,7 +241,7 @@ def main():
     while True:
         if not password_entered:
             # Check the master password
-            if check_master_password(fernet):
+            if check_master_password(master_password_file_path, fernet):
                 password_entered = True
             else:
                 print(
@@ -156,133 +273,7 @@ def main():
                 f"\n{colorama.Fore.RED}{colorama.Style.BRIGHT}Invalid input. Please try again.{colorama.Style.RESET_ALL}")
 
 
-# Define a function to view passwords
-def view_passwords(fernet):
-    print(f"{colorama.Fore.GREEN}\nViewing passwords...{colorama.Style.RESET_ALL}\n")
-    try:
-        # Open the encrypted passwords file and read each line
-        with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'passwords.encrypted'), 'r') as f:
-            table_data = [['Website', 'Username', 'Password']]
-            for line in f.readlines():
-                # Split the line into the website, username, and password
-                data = (line.rstrip())
-                website, user, password = data.split('|')
-                # Decrypt the password and add the website, username, and decrypted password to the table data
-                decrypted_password = fernet.decrypt(password.encode()).decode()
-                table_data.append([website, user, decrypted_password])
-            # Output the table
-            print(tabulate(table_data, headers='firstrow', tablefmt='psql'))
-
-    except FileNotFoundError:
-        print(f"{colorama.Fore.RED}No passwords found. Please create a password using the 'add' command.{colorama.Style.RESET_ALL}")
-
-
-# Define a function to add a password
-def add_password(fernet):
-    # Prompt the user for a new website, username, and password
-    website = input("\nEnter the website (type 'cancel' to quit):\n> ")
-    if website == "cancel":
-        print(f"{colorama.Fore.RED}Canceled adding password.{colorama.Style.RESET_ALL}")
-        return
-    username = input("\nEnter the username (type 'cancel' to quit):\n> ")
-    if username == "cancel":
-        print(f"{colorama.Fore.RED}Canceled adding password.{colorama.Style.RESET_ALL}")
-        return
-    password = input("\nEnter the password (type 'cancel' to quit):\n> ")
-    if password == "cancel":
-        print(f"{colorama.Fore.RED}Canceled adding password.{colorama.Style.RESET_ALL}")
-        return
-
-    # Encrypt the password and append the new username and encrypted password to the passwords file
-    encrypted_password = fernet.encrypt(password.encode()).decode()
-
-    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'passwords.encrypted'), 'a') as f:
-        f.write(f"{website} | {username} | {encrypted_password}\n")
-
-    print(f"\n{colorama.Fore.GREEN}Password added.{colorama.Style.RESET_ALL}")
-
-
-# Define a function to edit a password
-def edit_password(fernet):
-    try:
-        # Prompt the user for the website of the password they want to edit
-        website = input(
-            "\nEnter the website for the password you want to edit:\n> ").strip()
-
-        # Open the encrypted password file for reading
-        with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'passwords.encrypted'), 'r') as f:
-            lines = f.readlines()
-
-        found = False
-        # Find the line corresponding to the website and replace it with a new encrypted password
-        for i, line in enumerate(lines):
-            data = line.rstrip().split('|')
-            if re.sub(r'\s', '', data[0].lower()) == re.sub(r'\s', '', website.lower()):
-                found = True
-                # Prompt the user for the new password and encrypt it
-                new_password = input("\nEnter the new password:\n> ")
-                encrypted_password = fernet.encrypt(
-                    new_password.encode()).decode()
-                # Replace the old password with the new encrypted password in the file
-                lines[i] = f"{data[0]} | {data[1]} | {encrypted_password}\n"
-                with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'passwords.encrypted'), 'w') as f:
-                    f.write(''.join(lines))
-                print(
-                    f"{colorama.Fore.GREEN}Password edited successfully.{colorama.Style.RESET_ALL}")
-                break
-
-        if not found:
-            print(
-                f"{colorama.Fore.RED}No password found for that website.{colorama.Style.RESET_ALL}")
-
-    except FileNotFoundError:
-        print(f"{colorama.Fore.RED}No passwords found. Please create a password using the 'add' command.{colorama.Style.RESET_ALL}")
-
-
-# Define a function to delete a password
-def delete_password(fernet):
-    try:
-        # Prompt the user for the website of the password they want to delete
-        website = input(
-            "\nEnter the website for the password you want to delete:\n> ").strip()
-
-        # Get the full path to the passwords file
-        passwords_file = os.path.join(os.path.dirname(
-            os.path.abspath(__file__)), 'passwords.encrypted')
-
-        # Open the encrypted password file for reading
-        with open(passwords_file, 'r') as f:
-            lines = f.readlines()
-
-        found = False
-        # Find the line corresponding to the website and delete it
-        for i, line in enumerate(lines):
-            data = line.rstrip().split('|')
-            if re.sub(r'\s', '', data[0].lower()) == re.sub(r'\s', '', website.lower()):
-                found = True
-                del lines[i]
-                # Write the updated password file without the deleted line
-                with open(passwords_file, 'w') as f:
-                    f.write(''.join(lines))
-                print(
-                    f"{colorama.Fore.GREEN}Password deleted successfully.{colorama.Style.RESET_ALL}")
-                break
-
-        if not found:
-            print(
-                f"{colorama.Fore.RED}No password found for that website.{colorama.Style.RESET_ALL}")
-
-    except FileNotFoundError:
-        print(f"{colorama.Fore.RED}No passwords found. Please create a password using the 'add' command.{colorama.Style.RESET_ALL}")
-
-
-# Function to exit the program
-def exit_program():
-    print(f"{colorama.Fore.GREEN}\nExiting the program...{colorama.Style.RESET_ALL}")
-    exit()
-
-
 # Check if this script is being run as the main program
-if __name__ == "__main__":
+if (__name__ == "__main__"):
     # Call the main function to start the program
     main()
