@@ -76,7 +76,7 @@ def main():
             page_icon=":earth_africa:",
             layout="wide",
         )
-        logo = '/Users/andreaventi/Developer/CodeHub/Projects/Python_Projects/PlanetPath/Green_Leaf.png'
+        logo = 'https://green-transfer.fr/wp-content/uploads/2019/08/Green_Leaf_Earth_PNG_Clipart-2978.png'
 
         st.image(logo, width=365)
         st.title("PlanetPath")
