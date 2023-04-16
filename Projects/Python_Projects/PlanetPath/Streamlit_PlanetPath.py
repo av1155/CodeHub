@@ -39,9 +39,9 @@ def walking(distance):
         unit = "grams"
     points = round(distance * 10)
     st.write(
-        f"\nYou just saved {round(emissions, 2)} {unit} of CO2 emissions by walking {round(distance, 2)} miles with PlanetPath. Keep up the good work for a greener planet!")
+        f"\nYCongratulations! By walking {round(distance, 2)} miles with PlanetPath, you have saved {round(emissions, 2)} {unit} of CO2 emissions. Your small step has a huge impact on making our planet greener. Keep up the good work!")
     st.write(
-        f"\nYou've earned {points} points for walking {round(distance, 2)} miles with PlanetPath!")
+        f"\nYou've also earned {points} points.")
     return points
 
 
@@ -54,9 +54,9 @@ def biking(distance):
         unit = "grams"
     points = round(distance * 10)
     st.write(
-        f"\nYou just saved {round(emissions, 2)} {unit} of CO2 emissions by biking {round(distance, 2)} miles with PlanetPath. Keep up the good work for a greener planet!")
+        f"\nCongratulations! By biking {round(distance, 2)} miles with PlanetPath, you have saved {round(emissions, 2)} {unit} of CO2 emissions. You're on the right track for making our planet greener. Keep up the good work!")
     st.write(
-        f"\nYou've earned {points} points for biking {round(distance, 2)} miles with PlanetPath!")
+        f"\nYou've also earned {points} points.")
     return points
 
 
@@ -68,9 +68,10 @@ def bus(distance):
     else:
         unit = "grams"
     points = round(distance * 5)
-    st.write(f"\nYou just saved {round(emissions, 2)} {unit} of CO2 emissions by using the bus for {round(distance, 2)} miles with PlanetPath. Keep up the good work for a greener planet!")
     st.write(
-        f"\nYou've earned {points} points for using the bus for {round(distance, 2)} miles with PlanetPath!")
+        f"\nCongratulations! By using the bus for {round(distance, 2)} miles with PlanetPath, you have saved {round(emissions, 2)} {unit} of CO2 emissions. Your contribution matters in making our planet greener. Keep up the good work!")
+    st.write(
+        f"\nYou've also earned {points} points.")
     return points
 
 
@@ -83,9 +84,9 @@ def ride_share(distance):
         unit = "grams"
     points = round(distance * 3)
     st.write(
-        f"\nEach passenger saved {round(emissions, 2)} {unit} of CO2 emissions by using ride share for {round(distance, 2)} miles with PlanetPath. Keep up the good work for a greener planet!")
+        f"\nCongratulations! By using ride share for {round(distance, 2)} miles with PlanetPath, you have saved {round(emissions, 2)} {unit} of CO2 emissions per passenger. Your efforts towards carpooling have made our planet greener. Keep up the good work!")
     st.write(
-        f"\nYou've earned {points} points for using ride share for {round(distance, 2)} miles with PlanetPath!")
+        f"\nYou've also earned {points} points.")
     return points
 
 
