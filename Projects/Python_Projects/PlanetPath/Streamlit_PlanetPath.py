@@ -1,10 +1,7 @@
-import sys
 import streamlit as st
 from geopy.geocoders import Nominatim
 from geopy.exc import GeocoderServiceError
 from geopy.distance import geodesic
-import random
-import string
 
 
 def get_distance(place1, place2):
