@@ -3,6 +3,8 @@ import streamlit as st
 from geopy.geocoders import Nominatim
 from geopy.exc import GeocoderServiceError
 from geopy.distance import geodesic
+import random
+import string
 
 
 def get_distance(place1, place2):
@@ -39,7 +41,7 @@ def walking(distance):
         unit = "grams"
     points = round(distance * 10)
     st.write(
-        f"\nYCongratulations! By walking {round(distance, 2)} miles with PlanetPath, you have saved {round(emissions, 2)} {unit} of CO2 emissions. Your small step has a huge impact on making our planet greener. Keep up the good work!")
+        f"\nCongratulations! By walking {round(distance, 2)} miles with PlanetPath, you have saved {round(emissions, 2)} {unit} of CO2 emissions. Your small step has a huge impact on making our planet greener. Keep up the good work!")
     st.write(
         f"\nYou've also earned {points} points.")
     return points
@@ -121,7 +123,7 @@ def main():
 
         # Prompt user to choose transportation option
         choice = st.selectbox("Choose a transportation option:", [
-                              "Walking", "Biking", "Bus", "Ride share", "Driving"])
+                              "Walking", "Biking", "Bus", "Ride Share", "Driving"])
 
         submit_button = st.form_submit_button(label='Calculate')
 
@@ -137,7 +139,7 @@ def main():
             biking(distance)
         elif choice == "Bus":
             bus(distance)
-        elif choice == "Ride share":
+        elif choice == "Ride Share":
             ride_share(distance)
         elif choice == "Driving":
             driving(distance)
