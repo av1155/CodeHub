@@ -39,7 +39,8 @@ def bubble_sort(string_integers):
 
 
 def main():
-    string_integers = input()
+    string_integers = input(
+        "Type a list of integers in the format: 1 2 3 4\n> ")
     for element in bubble_sort(string_integers):
         print(element, end=" ")
 
