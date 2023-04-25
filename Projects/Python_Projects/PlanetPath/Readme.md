@@ -1,6 +1,6 @@
 # PlanetPath
 
-Welcome to PlanetPath, a web application that helps you calculate the CO2 emissions and points earned for different transportation methods.
+Welcome to [PlanetPath](https://a-projectspython-projectsplanetpathstreamlit-planetpath-v2swas.streamlit.app/), a web application that helps you calculate the CO2 emissions and points earned for different transportation methods.
 
 ## Table of contents
 
