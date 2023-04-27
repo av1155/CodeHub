@@ -4,6 +4,14 @@
 
 
 def prime_numbers_array(range_input):
+    """Function
+
+    Args:
+        range_input (integer): String of a number that is converted to an integer
+
+    Returns:
+        Prime Numbers: The function returns all of the prime numbersthat are in between the range the user provided.
+    """
 
     # create an empty list to store the prime numbers
     prime_numbers = []
