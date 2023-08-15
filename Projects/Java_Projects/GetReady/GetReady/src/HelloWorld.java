@@ -39,11 +39,11 @@ public class HelloWorld {
     }
 
     private static void burp() {
-        System.out.print("Buuuurp");
+        System.out.println("Buuuurp");
     }
 
     private static void printNameAndAge(String name, int number) {
-        System.out.print("My name is " + name + " and I am " + number + " years old.");
+        System.out.println("My name is " + name + " and I am " + number + " years old.");
 
     }
 
