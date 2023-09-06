@@ -16,9 +16,6 @@ Here is a list of the languages and technologies that you will find in this repo
   - Colorama
   - Pwinput
   - Tabulate
-  - NumPy
-  - Jupyter
-  - PyTorch
 - Java
 - HTML/CSS
 
