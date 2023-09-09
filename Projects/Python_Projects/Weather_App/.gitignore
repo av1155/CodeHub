@@ -1,0 +1,4 @@
+# .gitignore
+
+# Ignore specific text files with sensitive information
+api_key.txt
