@@ -16,33 +16,35 @@ public class StringEdit {
             printInstruction();
             String action = keyboard.next().toUpperCase();
 
-            if (action.charAt(0) == 'I')
+            switch (action.charAt(0))
             {
-                insert(keyboard, builder);
-            }
+                case 'I':
+                    insert(keyboard, builder);
+                    break;
 
-            else if (action.charAt(0) == 'D')
-            {
-                delete(keyboard, builder);
-            }
+                case 'D':
+                    delete(keyboard, builder);
+                    break;
 
-            else if (action.charAt(0) == 'S')
-            {
-                substitute(keyboard, builder);
-            }
+                case 'S':
+                    substitute(keyboard, builder);
+                    break;
 
-            else if (action.charAt(0) == 'R')
-            {
-                System.out.println("-------------------------");
-                System.out.println("0000000000111111111122222");
-                System.out.println("0123456789012345678901234");
-                System.out.println(builder.reverse());
-                System.out.print("-------------------------");
-            }
+                case 'R':
+                    System.out.println("-------------------------");
+                    System.out.println("0000000000111111111122222");
+                    System.out.println("0123456789012345678901234");
+                    System.out.println(builder.reverse());
+                    System.out.print("-------------------------");
+                    break;
 
-            else if (action.charAt(0) == 'Q')
-            {
-                terminate = true;
+                case 'Q':
+                    terminate = true;
+                    break;
+
+                default:
+                    System.out.println("Invalid option. Please try again.");
+                    break;
             }
         }
     }
