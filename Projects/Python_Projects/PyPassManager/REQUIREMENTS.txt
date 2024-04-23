@@ -1,4 +1,26 @@
-cryptography==3.4.8
-tabulate==0.8.9
-colorama==0.4.4
-pwinput==0.4.1
+# This file may be used to create an environment using:
+# $ conda create --name <env> --file <this file>
+# platform: osx-arm64
+bzip2
+ca-certificates
+cffi
+colorama
+cryptography
+libexpat
+libffi
+libsqlite
+libzlib
+ncurses
+openssl
+pip
+pwinput
+pycparser
+python
+python_abi
+readline
+setuptools
+tabulate
+tk
+tzdata
+wheel
+xz
